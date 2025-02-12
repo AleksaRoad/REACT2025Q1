@@ -22,13 +22,13 @@ export const CharacterInfoSidebar: FC<CharacterInfoSidebarProps> = ({
   };
 
   return (
-    <article className="bg-blue-xs flex min-w-72 flex-col items-center gap-5 rounded-4xl p-5">
+    <article className="dark:bg-blue-xs flex min-w-72 flex-col items-center gap-5 rounded-4xl bg-amber-100/70 p-5">
       <header className="flex w-64 flex-col items-center justify-center gap-3 rounded-3xl text-black">
         <h1 className="m-0 max-w-full text-center text-3xl font-bold">
           {character.name}
         </h1>
         <img
-          className="size-30 rounded-full border-4 border-gray-200/70"
+          className="size-30 rounded-full border-4 border-amber-100 dark:border-gray-200/70"
           src={character.image}
           alt={character.name}
         />

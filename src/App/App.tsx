@@ -1,7 +1,25 @@
-import type { FC } from 'react';
+import { type FC } from 'react';
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router';
 
-import { HomePage } from '@/components';
+import { CharacterPage, HomePage, NotFound } from '@/components';
 
 export const App: FC = () => {
-  return <HomePage />;
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<HomePage />}>
+          <Route index element={<CharacterPage />} />
+        </Route>
+        <Route path="*" element={<Navigate to="/404" replace />} />
+        <Route
+          path="/404"
+          element={
+            <div className="flex min-h-screen items-center justify-center">
+              <NotFound />
+            </div>
+          }
+        />
+      </Routes>
+    </BrowserRouter>
+  );
 };

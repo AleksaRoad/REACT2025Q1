@@ -1,6 +1,8 @@
 @import url('/assets/fonts/fonts.css');
 @import 'tailwindcss';
 
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+
 @theme {
   --animate-spin: spin 1.5s linear infinite;
 

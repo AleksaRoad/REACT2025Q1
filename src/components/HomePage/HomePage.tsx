@@ -1,4 +1,4 @@
-import type { FC } from 'react';
+import { type FC } from 'react';
 import { useSearchParams } from 'react-router';
 
 import { Footer, Header, Main, Spinner } from '@/components';
@@ -15,6 +15,7 @@ export const HomePage: FC = () => {
     CACHE_KEY.searchQuery
   );
   const searchQuery = loadSearchQuery() ?? '';
+
   const {
     data,
     error: apiErrorMessage,
@@ -33,25 +34,29 @@ export const HomePage: FC = () => {
   const isPaginationVisible = !!(data && data.characters.length > 0);
 
   return (
-    <div className="mx-auto flex min-h-screen w-full max-w-xl flex-col items-center justify-center p-5">
-      <h1 className="font-ramFont p-6 text-center text-5xl text-white">
-        Rick and Morty Characters
-      </h1>
-      <Header onSearch={handleSearch} apiErrorMessage={apiErrorMessage} />
-      {isLoading ? (
-        <div className="flex flex-grow items-center justify-center">
-          <Spinner />
-        </div>
-      ) : (
-        data && <Main characters={data.characters} searchQuery={searchQuery} />
-      )}
-      <Footer
-        showPagination={isPaginationVisible}
-        currentPage={currentPage}
-        totalPages={data?.totalPages}
-        onPreviousPage={() => handlePageChange(currentPage - 1)}
-        onNextPage={() => handlePageChange(currentPage + 1)}
-      />
+    <div className="h-full w-full bg-[url('/assets/images/bg.webp')] bg-cover bg-fixed bg-center dark:bg-[url('/assets/images/bg1.webp')]">
+      <div className="mx-auto flex min-h-screen w-full max-w-xl flex-col items-center justify-center p-5">
+        <h1 className="font-ramFont p-6 text-center text-6xl text-yellow-950 dark:text-white">
+          Rick and Morty Characters
+        </h1>
+        <Header onSearch={handleSearch} apiErrorMessage={apiErrorMessage} />
+        {isLoading ? (
+          <div className="flex flex-grow items-center justify-center">
+            <Spinner />
+          </div>
+        ) : (
+          data && (
+            <Main characters={data.characters} searchQuery={searchQuery} />
+          )
+        )}
+        <Footer
+          showPagination={isPaginationVisible}
+          currentPage={currentPage}
+          totalPages={data?.totalPages}
+          onPreviousPage={() => handlePageChange(currentPage - 1)}
+          onNextPage={() => handlePageChange(currentPage + 1)}
+        />
+      </div>
     </div>
   );
 };
