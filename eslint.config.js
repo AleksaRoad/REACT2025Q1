@@ -9,7 +9,7 @@ import tseslint from 'typescript-eslint';
 import reactCompiler from 'eslint-plugin-react-compiler';
 import jsDom from 'eslint-plugin-jest-dom';
 import eslintTestingLibrary from 'eslint-plugin-testing-library';
-import vitest from 'eslint-plugin-vitest';
+import vitest from '@vitest/eslint-plugin';
 import perfectionist from 'eslint-plugin-perfectionist';
 import simpleImportSort from 'eslint-plugin-simple-import-sort';
 
