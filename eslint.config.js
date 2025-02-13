@@ -76,10 +76,10 @@ export default tseslint.config(
           ],
           customGroups: {
             value: {
-              'my-internal': '^@.+',
+              'my-internal': '^@/.+',
             },
             type: {
-              'my-internal-type': '^@.+',
+              'my-internal-type': '^@/.+',
             },
           },
         },

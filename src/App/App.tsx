@@ -11,14 +11,7 @@ export const App: FC = () => {
           <Route index element={<CharacterPage />} />
         </Route>
         <Route path="*" element={<Navigate to="/404" replace />} />
-        <Route
-          path="/404"
-          element={
-            <div className="flex min-h-screen items-center justify-center">
-              <NotFound />
-            </div>
-          }
-        />
+        <Route path="/404" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   );

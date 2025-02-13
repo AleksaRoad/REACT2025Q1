@@ -5,6 +5,7 @@ import type { FC } from 'react';
 import { ErrorDisplay, Spinner } from '@/components';
 import { rickAndMortyApi } from '@/services';
 import { ERROR_MESSAGES } from '@/shared';
+import { getErrorMessage } from '@/shared/helpers/helperError';
 
 import { CharacterInfoSidebar } from './CharacterInfoSidebar';
 
@@ -19,12 +20,6 @@ export const CharacterPage: FC = () => {
     isLoading,
   } = rickAndMortyApi.useGetCharacterByIdQuery(Number(characterId));
 
-  const errorMessage = error
-    ? 'status' in error
-      ? `Error ${error.status}: ${JSON.stringify(error.data)}`
-      : (error.message ?? ERROR_MESSAGES.FAILED_TO_FETCH_DATA)
-    : '';
-
   return (
     <>
       {isLoading && (
@@ -32,7 +27,14 @@ export const CharacterPage: FC = () => {
           <Spinner />
         </div>
       )}
-      {error && <ErrorDisplay errorMessage={errorMessage} />}
+      {error && (
+        <ErrorDisplay
+          errorMessage={getErrorMessage({
+            apiErrorMessage: ERROR_MESSAGES.FAILED_TO_FETCH_DATA,
+            error,
+          })}
+        />
+      )}
       {!isLoading && !error && character && (
         <CharacterInfoSidebar character={character} />
       )}

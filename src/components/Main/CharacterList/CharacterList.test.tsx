@@ -1,7 +1,7 @@
+import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router';
 
 import { MOCK_CHARACTERS_DATA, MOCK_EMPTY_DATA } from '@/__mocks__';
-import { render, screen } from '@testing-library/react';
 
 import { CharacterList } from './CharacterList';
 

@@ -1,13 +1,12 @@
-import { PAGE_SIZE, type RickAndMortyCharacter } from '@/shared';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+
+import { PAGE_SIZE, type RickAndMortyCharacter } from '@/shared';
 
 import { BASE_URL, ENDPOINTS } from './constants';
 
 const addImageToCharacter = (character: RickAndMortyCharacter) => ({
   ...character,
-  image:
-    character.image ||
-    `${BASE_URL.avatar}${ENDPOINTS.avatar}${character.id}.jpeg`,
+  image: `${BASE_URL.avatar}${ENDPOINTS.avatar}${character.id}.jpeg`,
 });
 
 export const rickAndMortyApi = createApi({
