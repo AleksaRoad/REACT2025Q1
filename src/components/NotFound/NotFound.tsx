@@ -1,5 +1,6 @@
-import type { FC } from 'react';
 import { useNavigate } from 'react-router';
+
+import type { FC } from 'react';
 
 import { ERROR_MESSAGES } from '@/shared';
 

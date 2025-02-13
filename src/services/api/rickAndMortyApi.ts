@@ -1,6 +1,5 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-
 import { PAGE_SIZE, type RickAndMortyCharacter } from '@/shared';
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 import { BASE_URL, ENDPOINTS } from './constants';
 

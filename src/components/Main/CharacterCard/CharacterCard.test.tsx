@@ -1,7 +1,6 @@
+import { MOCK_CHARACTERS_DATA } from '@/__mocks__';
 import { render, screen } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
-
-import { MOCK_CHARACTERS_DATA } from '@/__mocks__';
 
 import { CharacterCard } from './CharacterCard';
 

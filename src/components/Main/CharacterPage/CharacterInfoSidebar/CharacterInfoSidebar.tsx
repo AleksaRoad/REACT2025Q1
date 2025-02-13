@@ -1,5 +1,6 @@
-import type { FC } from 'react';
 import { useLocation, useNavigate } from 'react-router';
+
+import type { FC } from 'react';
 
 import type { RickAndMortyCharacter } from '@/shared';
 

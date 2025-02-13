@@ -1,5 +1,6 @@
-import type { FC } from 'react';
 import { useLocation } from 'react-router';
+
+import type { FC } from 'react';
 
 import { ErrorDisplay, Spinner } from '@/components';
 import { rickAndMortyApi } from '@/services';

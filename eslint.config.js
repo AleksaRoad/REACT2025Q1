@@ -10,7 +10,6 @@ import jsDom from 'eslint-plugin-jest-dom';
 import eslintTestingLibrary from 'eslint-plugin-testing-library';
 import vitest from '@vitest/eslint-plugin';
 import perfectionist from 'eslint-plugin-perfectionist';
-import simpleImportSort from 'eslint-plugin-simple-import-sort';
 
 export default tseslint.config(
   { ignores: ['dist'] },
@@ -39,7 +38,6 @@ export default tseslint.config(
       jsDom,
       eslintTestingLibrary,
       perfectionist,
-      'simple-import-sort': simpleImportSort,
     },
     rules: {
       '@typescript-eslint/consistent-type-exports': 'error',
@@ -61,8 +59,31 @@ export default tseslint.config(
         },
       ],
       'perfectionist/sort-interfaces': ['error'],
-      'simple-import-sort/imports': 'error',
-      'simple-import-sort/exports': 'error',
+      'perfectionist/sort-imports': [
+        'error',
+        {
+          groups: [
+            ['builtin', 'external'],
+            'type',
+            'my-internal',
+            'my-internal-type',
+            ['parent', 'sibling', 'index'],
+            ['parent-type', 'sibling-type', 'index-type'],
+            'internal',
+            'internal-type',
+            'unknown',
+            'style',
+          ],
+          customGroups: {
+            value: {
+              'my-internal': '^@.+',
+            },
+            type: {
+              'my-internal-type': '^@.+',
+            },
+          },
+        },
+      ],
     },
     settings: {
       react: {

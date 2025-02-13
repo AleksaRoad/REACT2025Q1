@@ -1,7 +1,6 @@
+import { CACHE_KEY } from '@/shared';
 import { render, screen } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
-
-import { CACHE_KEY } from '@/shared';
 
 import { SearchForm } from './SearchForm';
 

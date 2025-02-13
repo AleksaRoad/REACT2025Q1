@@ -1,5 +1,3 @@
-import { render, screen, waitFor } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 import {
   createMemoryRouter,
   MemoryRouter,
@@ -14,6 +12,8 @@ import {
   CharacterPage,
   PaginationControl,
 } from '@/components';
+import { render, screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 
 import { HomePage } from './HomePage';
 
