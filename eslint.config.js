@@ -1,7 +1,6 @@
 import jsxA11y from 'eslint-plugin-jsx-a11y';
 import eslintPrettier from 'eslint-config-prettier';
 import js from '@eslint/js';
-import globals from 'globals';
 import reactHooks from 'eslint-plugin-react-hooks';
 import reactRefresh from 'eslint-plugin-react-refresh';
 import react from 'eslint-plugin-react';
@@ -28,7 +27,7 @@ export default tseslint.config(
         tsconfigRootDir: import.meta.dirname,
       },
       ecmaVersion: 2020,
-      globals: globals.browser,
+      globals: { ...vitest.environments.env.globals },
     },
     plugins: {
       react,
@@ -53,6 +52,7 @@ export default tseslint.config(
       'react-compiler/react-compiler': 'error',
       ...react.configs.recommended.rules,
       ...react.configs['jsx-runtime'].rules,
+      ...vitest.configs.recommended.rules,
       'no-console': ['error', { allow: ['error'] }],
       'perfectionist/sort-objects': [
         'error',
@@ -67,6 +67,9 @@ export default tseslint.config(
     settings: {
       react: {
         version: 'detect',
+      },
+      vitest: {
+        typecheck: true,
       },
     },
   }
