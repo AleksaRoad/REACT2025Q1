@@ -1,5 +1,1 @@
-export {
-  fetchCharacters,
-  getCharacterById,
-  getCharacterImageUrl,
-} from './rickAndMortyApi';
+export { rickAndMortyApi } from './rickAndMortyApi';

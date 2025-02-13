@@ -2,8 +2,8 @@ import { type FC } from 'react';
 import { useSearchParams } from 'react-router';
 
 import { Footer, Header, Main, Spinner } from '@/components';
-import { fetchCharacters, useStorage } from '@/services';
-import { CACHE_KEY, useLoadData } from '@/shared';
+import { rickAndMortyApi } from '@/services';
+import { CACHE_KEY, useStorage } from '@/shared';
 
 import { useHomePageParams } from './useMainPageParams';
 
@@ -16,11 +16,16 @@ export const HomePage: FC = () => {
   );
   const searchQuery = loadSearchQuery() ?? '';
 
-  const {
-    data,
-    error: apiErrorMessage,
-    isLoading,
-  } = useLoadData(fetchCharacters, searchQuery, currentPage);
+  const { data, error, isLoading } = rickAndMortyApi.useGetCharactersQuery({
+    page: currentPage,
+    searchQuery,
+  });
+
+  const apiErrorMessage = error
+    ? 'status' in error
+      ? `Error ${error.status}: ${JSON.stringify(error.data)}`
+      : error.message
+    : '';
 
   const handleSearch = (newSearchQuery: string) => {
     saveSearchQuery(newSearchQuery);

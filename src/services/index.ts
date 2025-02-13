@@ -1,2 +1,2 @@
-export { fetchCharacters, getCharacterById, getCharacterImageUrl } from './api';
+export { rickAndMortyApi } from './api';
 export { useStorage } from '@/shared';

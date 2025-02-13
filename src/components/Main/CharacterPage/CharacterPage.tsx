@@ -2,8 +2,8 @@ import type { FC } from 'react';
 import { useLocation } from 'react-router';
 
 import { ErrorDisplay, Spinner } from '@/components';
-import { getCharacterById } from '@/services';
-import { useLoadData } from '@/shared';
+import { rickAndMortyApi } from '@/services';
+import { ERROR_MESSAGES } from '@/shared';
 
 import { CharacterInfoSidebar } from './CharacterInfoSidebar';
 
@@ -16,7 +16,13 @@ export const CharacterPage: FC = () => {
     data: character,
     error,
     isLoading,
-  } = useLoadData(getCharacterById, Number(characterId));
+  } = rickAndMortyApi.useGetCharacterByIdQuery(Number(characterId));
+
+  const errorMessage = error
+    ? 'status' in error
+      ? `Error ${error.status}: ${JSON.stringify(error.data)}`
+      : (error.message ?? ERROR_MESSAGES.FAILED_TO_FETCH_DATA)
+    : '';
 
   return (
     <>
@@ -25,7 +31,7 @@ export const CharacterPage: FC = () => {
           <Spinner />
         </div>
       )}
-      {error && <ErrorDisplay errorMessage={error} />}
+      {error && <ErrorDisplay errorMessage={errorMessage} />}
       {!isLoading && !error && character && (
         <CharacterInfoSidebar character={character} />
       )}

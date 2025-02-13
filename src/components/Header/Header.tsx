@@ -5,7 +5,7 @@ import { ErrorDisplay } from '@/components';
 import { ERROR_MESSAGES, useTheme } from '@/shared';
 
 type HeaderProps = {
-  apiErrorMessage: string | null;
+  apiErrorMessage: string | null | undefined;
   onSearch: (searchQuery: string) => void;
 };
 
