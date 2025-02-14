@@ -8,3 +8,4 @@ export { ThemeProvider, useTheme } from './context';
 export { useStorage } from './hooks';
 export type { RickAndMortyCharacter } from './types';
 export { rickAndMortyApi } from '@/services';
+export { getErrorMessage } from './helpers';

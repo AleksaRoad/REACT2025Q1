@@ -1,4 +1,4 @@
-import { type ReactNode, useEffect, useState } from 'react';
+import { type ReactNode, useLayoutEffect, useState } from 'react';
 
 import { CACHE_KEY, useStorage } from '@/shared';
 
@@ -22,14 +22,14 @@ export const ThemeProvider = ({ children }: ThemeProviderProps) => {
     });
   };
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const storedTheme = load();
     if (storedTheme) {
       setIsDark(storedTheme === 'dark');
     }
   }, [load]);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     document.documentElement.setAttribute(
       'data-theme',
       isDark ? 'dark' : 'light'

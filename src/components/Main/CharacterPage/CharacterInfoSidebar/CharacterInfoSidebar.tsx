@@ -2,7 +2,7 @@ import { useLocation, useNavigate } from 'react-router';
 
 import type { FC } from 'react';
 
-import type { RickAndMortyCharacter } from '@/shared';
+import { BUTTON_STYLES, type RickAndMortyCharacter } from '@/shared';
 
 type CharacterInfoSidebarProps = {
   character: RickAndMortyCharacter;
@@ -64,7 +64,7 @@ export const CharacterInfoSidebar: FC<CharacterInfoSidebarProps> = ({
       </main>
       <footer>
         <button
-          className="active:bg-blue-md sm:hover:bg-blue-md focus:outline-blue-xs w-20 cursor-pointer rounded-xl border-none bg-white py-1.5 text-black transition-colors duration-200 ease-in-out active:text-white sm:hover:text-white"
+          className={BUTTON_STYLES.close}
           type="button"
           aria-label="close"
           onClick={handleCloseSidebar}

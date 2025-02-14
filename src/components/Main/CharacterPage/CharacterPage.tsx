@@ -4,8 +4,7 @@ import type { FC } from 'react';
 
 import { ErrorDisplay, Spinner } from '@/components';
 import { rickAndMortyApi } from '@/services';
-import { ERROR_MESSAGES } from '@/shared';
-import { getErrorMessage } from '@/shared/helpers/helperError';
+import { ERROR_MESSAGES, getErrorMessage } from '@/shared';
 
 import { CharacterInfoSidebar } from './CharacterInfoSidebar';
 

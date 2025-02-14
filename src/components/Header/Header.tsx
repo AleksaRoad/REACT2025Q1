@@ -2,7 +2,7 @@ import { type FC } from 'react';
 
 import { SearchForm } from '@/components';
 import { ErrorDisplay } from '@/components';
-import { ERROR_MESSAGES, useTheme } from '@/shared';
+import { BUTTON_STYLES, ERROR_MESSAGES, useTheme } from '@/shared';
 
 type HeaderProps = {
   apiErrorMessage: string | null | undefined;
@@ -23,10 +23,7 @@ export const Header: FC<HeaderProps> = ({ apiErrorMessage, onSearch }) => {
           apiErrorMessage={apiErrorMessage}
         />
       )}
-      <button
-        className="h-12 w-12 cursor-pointer rounded-xl bg-yellow-900 p-1 text-white dark:bg-white dark:text-black"
-        onClick={toggleTheme}
-      >
+      <button className={BUTTON_STYLES.theme} onClick={toggleTheme}>
         <img src={themeIcon} alt="theme" className="h-10 w-10" />
       </button>
     </header>

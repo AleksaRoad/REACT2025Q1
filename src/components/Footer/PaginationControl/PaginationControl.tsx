@@ -1,5 +1,7 @@
 import type { FC } from 'react';
 
+import { BUTTON_STYLES } from '@/shared';
+
 type PaginationControlProps = {
   currentPage: number;
   totalPages: number;
@@ -16,7 +18,7 @@ export const PaginationControl: FC<PaginationControlProps> = ({
   return (
     <div className="my-5 flex items-center justify-center gap-2">
       <button
-        className="sm:hover:bg-blue-md focus:outline-blue-xs w-20 cursor-pointer rounded-xl border-none bg-white py-1.5 text-black transition-colors duration-200 ease-in-out active:bg-blue-700 disabled:pointer-events-none disabled:opacity-50 sm:hover:text-white"
+        className={BUTTON_STYLES.pagination}
         onClick={onPreviousPage}
         disabled={currentPage === 1}
       >
@@ -28,7 +30,7 @@ export const PaginationControl: FC<PaginationControlProps> = ({
         </span>
       </div>
       <button
-        className="sm:hover:bg-blue-md focus:outline-blue-xs w-20 cursor-pointer rounded-xl border-none bg-white py-1.5 text-black transition-colors duration-200 ease-in-out active:bg-blue-700 disabled:pointer-events-none disabled:opacity-50 sm:hover:text-white"
+        className={BUTTON_STYLES.pagination}
         onClick={onNextPage}
         disabled={currentPage === totalPages}
       >
