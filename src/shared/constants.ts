@@ -26,5 +26,5 @@ export const BUTTON_STYLES = {
   search:
     'dark:sm:hover:bg-violet-500 sm:hover:bg-yellow-900 active:bg-yellow-900 dark:active:bg-blue-700 focus:outline-amber-200 dark:focus:outline-blue-xs cursor-pointer rounded-xl border-none dark:bg-black bg-yellow-950 px-4 py-3 text-white transition-colors duration-1000 ease-in-out',
   theme:
-    'active:bg-violet-500 sm:hover:bg-yellow-950 dark:active:bg-blue-700 dark:sm:hover:bg-amber-200 focus:outline-amber-200 dark:focus:outline-violet-500 cursor-pointer px-2 rounded-xl border-none bg-yellow-900 py-1 text-black transition-colors duration-1500 ease-in-out active:text-white sm:hover:text-white dark:bg-white dark:text-black dark:sm:hover:bg-violet-500 dark:sm:hover:text-black',
+    'active:bg-yellow-950 sm:hover:bg-yellow-950 dark:active:bg-yellow-200 dark:sm:hover:bg-amber-200 focus:outline-amber-200 dark:focus:outline-amber-200 cursor-pointer px-2 rounded-xl border-none bg-yellow-900 py-1 text-black transition-colors duration-1500 ease-in-out active:text-white sm:hover:text-white dark:bg-white dark:text-black dark:sm:hover:bg-amber-200 dark:hover:text-black',
 };
