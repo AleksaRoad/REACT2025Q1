@@ -68,7 +68,7 @@ describe('HomePage', () => {
           </MemoryRouter>
         );
 
-        expect(screen.getByRole('status')).toBeInTheDocument();
+        expect(screen.getByTestId('status')).toBeInTheDocument();
       });
     });
 
