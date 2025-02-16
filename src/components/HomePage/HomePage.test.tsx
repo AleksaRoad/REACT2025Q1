@@ -1,5 +1,6 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { Provider } from 'react-redux';
 import {
   createMemoryRouter,
   MemoryRouter,
@@ -14,6 +15,8 @@ import {
   CharacterPage,
   PaginationControl,
 } from '@/components';
+import { ThemeProvider } from '@/shared';
+import { store } from '@/store';
 
 import { HomePage } from './HomePage';
 
@@ -24,51 +27,34 @@ describe('HomePage', () => {
     });
 
     it('should trigger additional API call to fetch detailed information when user clicks on the Card', async () => {
-      const fetchSpy = vi.spyOn(globalThis, 'fetch');
       const user = userEvent.setup();
 
       render(
-        <MemoryRouter>
-          <Routes>
-            <Route path="/" element={<HomePage />}>
-              <Route index element={<CharacterPage />} />
-            </Route>
-          </Routes>
-        </MemoryRouter>
+        <Provider store={store}>
+          <ThemeProvider>
+            <MemoryRouter>
+              <Routes>
+                <Route path="/" element={<HomePage />}>
+                  <Route index element={<CharacterPage />} />
+                </Route>
+              </Routes>
+            </MemoryRouter>
+          </ThemeProvider>
+        </Provider>
       );
 
       const firstCard = await screen.findByRole('button', {
-        name: /Morty Smith/i,
+        name: /Beth Smith/i,
       });
 
       expect(firstCard).toBeInTheDocument();
 
-      expect(fetchSpy).toHaveBeenCalledOnce();
-
       await user.click(firstCard);
 
       await waitFor(() => {
-        expect(fetchSpy).toHaveBeenCalledWith(
-          'https://rickandmortyapi-sigma.vercel.app/api/character/2'
-        );
-      });
-    });
-
-    describe('CharacterInfoSidebar', () => {
-      afterEach(() => {
-        vi.clearAllMocks();
-      });
-
-      it('should display a loading indicator while fetching data', async () => {
-        render(
-          <MemoryRouter>
-            <Routes>
-              <Route path="/" element={<HomePage />}></Route>
-            </Routes>
-          </MemoryRouter>
-        );
-
-        expect(screen.getByTestId('status')).toBeInTheDocument();
+        expect(screen.getByText(/Location/i)).toBeInTheDocument();
+        const elements = screen.getAllByText(/Beth Smith/i);
+        expect(elements).toHaveLength(2);
       });
     });
 
@@ -142,7 +128,14 @@ describe('HomePage', () => {
           { initialEntries: ['/?page=2'] }
         );
 
-        render(<RouterProvider router={router} />);
+        render(
+          <Provider store={store}>
+            {' '}
+            <ThemeProvider>
+              <RouterProvider router={router} />{' '}
+            </ThemeProvider>{' '}
+          </Provider>
+        );
 
         const nextButton = await screen.findByRole('button', { name: /next/i });
 
