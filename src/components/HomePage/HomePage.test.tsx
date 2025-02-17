@@ -21,6 +21,13 @@ import { store } from '@/store';
 import { HomePage } from './HomePage';
 
 describe('HomePage', () => {
+  // const server = setupServer(...handlers);
+  // server.listen();
+
+  // beforeAll(() => server.listen());
+  // afterEach(() => server.resetHandlers());
+  // afterAll(() => server.close());
+
   describe('CharacterCard', () => {
     afterEach(() => {
       vi.clearAllMocks();
@@ -55,6 +62,30 @@ describe('HomePage', () => {
         expect(screen.getByText(/Location/i)).toBeInTheDocument();
         const elements = screen.getAllByText(/Beth Smith/i);
         expect(elements).toHaveLength(2);
+      });
+    });
+
+    describe('CharacterInfoSidebar', () => {
+      afterEach(() => {
+        vi.clearAllMocks();
+      });
+
+      it.skip('should display a loading indicator while fetching data', async () => {
+        render(
+          <Provider store={store}>
+            <ThemeProvider>
+              <MemoryRouter>
+                <Routes>
+                  <Route path="/" element={<HomePage />}></Route>
+                </Routes>
+              </MemoryRouter>
+            </ThemeProvider>
+          </Provider>
+        );
+
+        await waitFor(() => {
+          expect(screen.getByTestId('spinner')).toBeInTheDocument();
+        });
       });
     });
 
