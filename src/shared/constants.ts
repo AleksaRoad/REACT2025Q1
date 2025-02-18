@@ -21,12 +21,12 @@ export const ERROR_MESSAGES = {
 export const BUTTON_STYLES = {
   card: 'dark:bg-blue-xs dark:focus:outline-blue-xs focus:outline-focus flex w-64 cursor-pointer flex-col items-center justify-center gap-5 rounded-3xl bg-lime-100/80 p-5 text-black transition-transform duration-400 ease-in-out focus-visible:ring-2 active:scale-95 sm:hover:scale-105 relative',
   close:
-    'active:bg-yellow-900 sm:hover:bg-yellow-900 dark:active:bg-violet-500 dark:sm:hover:bg-violet-500 focus:outline-amber-200 dark:focus:outline-blue-xs w-20 cursor-pointer rounded-xl border-none bg-white py-2.5 text-black transition-colors duration-500 ease-in-out active:text-white sm:hover:text-white dark:bg-black dark:text-white dark:sm:hover:bg-violet-500 dark:sm:hover:text-white',
+    'dark:sm:hover:bg-violet-500 sm:hover:bg-yellow-900 active:bg-yellow-900 dark:active:bg-blue-700 focus:outline-amber-200 dark:focus:outline-blue-xs cursor-pointer rounded-xl border-none dark:bg-black bg-yellow-950 px-4 py-3 text-white transition-colors duration-1000 ease-in-out',
   favorites:
     'focus:outline-focus dark:focus:outline-blue-xs dark:bg-blue-xs cursor-pointer rounded-xl bg-amber-200 px-3 py-2 text-red-600 transition-transform duration-500 ease-in-out active:scale-95 sm:hover:scale-105',
   home: 'active:bg-yellow-900 sm:hover:bg-yellow-900 dark:active:bg-violet-500 dark:sm:hover:bg-violet-500 focus:outline-amber-200 dark:focus:outline-blue-xs w-24 cursor-pointer rounded-xl border-none bg-yellow-950 py-2 text-white transition-colors duration-500 ease-in-out active:text-white sm:hover:text-white dark:bg-black dark:text-white dark:sm:hover:bg-violet-500 dark:sm:hover:text-white',
   pagination:
-    'sm:hover:bg-blue-md focus:outline-lime-200 w-20 cursor-pointer rounded-xl border-none bg-white py-1.5 text-black transition-colors duration-500 ease-in-out active:bg-blue-700 disabled:pointer-events-none disabled:opacity-50 sm:hover:text-white',
+    'active:bg-amber-200 sm:hover:bg-amber-200 dark:active:bg-violet-500 dark:sm:hover:bg-violet-500 focus:outline-focus dark:focus:outline-blue-xs w-20 cursor-pointer rounded-xl border-none bg-amber-100 py-2.5 text-black transition-colors duration-700 ease-in-out dark:bg-blue-xs dark:text-black dark:sm:hover:bg-violet-500 dark:sm:hover:text-white',
   search:
     'dark:sm:hover:bg-violet-500 sm:hover:bg-yellow-900 active:bg-yellow-900 dark:active:bg-blue-700 focus:outline-amber-200 dark:focus:outline-blue-xs cursor-pointer rounded-xl border-none dark:bg-black bg-yellow-950 px-4 py-3 text-white transition-colors duration-1000 ease-in-out',
   theme:
