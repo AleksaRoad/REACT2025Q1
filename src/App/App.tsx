@@ -8,7 +8,7 @@ export const App: FC = () => {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<HomePage />}>
-          <Route index element={<CharacterPage />} />
+          <Route path="/details/:id" element={<CharacterPage />} />
         </Route>
         <Route path="*" element={<Navigate to="/404" replace />} />
         <Route path="/404" element={<NotFound />} />

@@ -1,4 +1,5 @@
 export const CACHE_KEY = {
+  favorites: 'RAM_Favorites',
   searchQuery: 'RAM_SearchQuery',
   theme: 'RAM_Theme',
 };
@@ -12,6 +13,7 @@ export const ERROR_MESSAGES = {
   NO_THEME_PROVIDER: 'useTheme must be used within a ThemeProvider',
   NOT_FOUND: 'The page you are looking for does not exist.',
   OOOPS: 'Ooops! Something went wrong!',
+  PARSING_ERROR: 'Error parsing JSON:',
   PLEASE_TRY_AGAIN: 'Please try using different keywords.',
   ROOT_ELEMENT_NOT_FOUND: 'Root element not found',
 };

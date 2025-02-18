@@ -1,45 +1,59 @@
-import { type FC, memo, useState, type MouseEvent } from 'react';
+import { type FC, memo } from 'react';
+import { useDispatch } from 'react-redux';
+import { Link, useSearchParams } from 'react-router';
 
-import { BUTTON_STYLES, type RickAndMortyCharacter } from '@/shared';
+import {
+  BUTTON_STYLES,
+  CACHE_KEY,
+  useStorage,
+  useAppSelector,
+  type RickAndMortyCharacter,
+} from '@/shared';
+import { removeFavorite, addFavorite, store } from '@/store';
 
-import { StarIcon } from './StarIcon/StarIcon';
+import { FavoriteButton } from './FavoriteButton';
 
 type CharacterCardProps = {
   character: RickAndMortyCharacter;
-  onClick: (character: RickAndMortyCharacter) => void;
 };
 
-const CharacterCardComponent: FC<CharacterCardProps> = ({
-  character,
-  onClick,
-}) => {
-  const [isFavorite, setIsFavorite] = useState(false);
+const CharacterCardComponent: FC<CharacterCardProps> = ({ character }) => {
+  const dispatch = useDispatch();
+  const favorites = useAppSelector((state) => state.favorites);
+  const { save } = useStorage(CACHE_KEY.favorites);
+  const [searchParams] = useSearchParams();
 
-  const handleCardClick = (e: MouseEvent) => {
-    e.stopPropagation();
-    setIsFavorite(!isFavorite);
-    onClick(character);
+  const isFavorite = favorites.some(
+    (fav: RickAndMortyCharacter) => fav.id === character.id
+  );
+
+  const toggleFavorite = () => {
+    if (isFavorite) {
+      dispatch(removeFavorite({ id: character.id }));
+    } else {
+      dispatch(addFavorite(character));
+    }
+    const updatedFavorites = store.getState().favorites;
+    save(JSON.stringify(updatedFavorites));
   };
 
   return (
-    <button className={BUTTON_STYLES.card} onClick={() => onClick(character)}>
+    <Link
+      to={`/details/${character.id}?${searchParams.toString()}`}
+      className={BUTTON_STYLES.card}
+    >
       <header className="flex w-full items-center justify-between gap-3">
         <h1 className="m-0 overflow-hidden text-2xl font-bold text-ellipsis whitespace-nowrap">
           {character.name}
         </h1>
-        <button
-          className="flex size-10 cursor-pointer items-center justify-center"
-          onClick={handleCardClick}
-        >
-          <StarIcon isFavorite={isFavorite} />
-        </button>
+        <FavoriteButton isFavorite={isFavorite} onClick={toggleFavorite} />
       </header>
       <img
         className="size-30 rounded-full border-4 border-amber-100 dark:border-gray-200/70"
         src={character.image}
         alt={character.name}
       />
-    </button>
+    </Link>
   );
 };
 

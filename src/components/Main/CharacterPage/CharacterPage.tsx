@@ -1,4 +1,4 @@
-import { useLocation } from 'react-router';
+import { useParams } from 'react-router';
 
 import type { FC } from 'react';
 
@@ -9,9 +9,7 @@ import { ERROR_MESSAGES, getErrorMessage } from '@/shared';
 import { CharacterInfoSidebar } from './CharacterInfoSidebar';
 
 export const CharacterPage: FC = () => {
-  const location = useLocation();
-  const searchParams = new URLSearchParams(location.search);
-  const characterId = searchParams.get('details');
+  const { id: characterId } = useParams();
 
   const {
     data: character,

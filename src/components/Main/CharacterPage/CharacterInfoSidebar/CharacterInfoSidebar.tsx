@@ -1,4 +1,4 @@
-import { useLocation, useNavigate } from 'react-router';
+import { useNavigate, useSearchParams } from 'react-router';
 
 import type { FC } from 'react';
 
@@ -12,12 +12,10 @@ export const CharacterInfoSidebar: FC<CharacterInfoSidebarProps> = ({
   character,
 }) => {
   const navigate = useNavigate();
-  const location = useLocation();
+  const [searchParams] = useSearchParams();
 
   const handleCloseSidebar = () => {
-    const currentParams = new URLSearchParams(location.search);
-    currentParams.delete('details');
-    navigate(`${location.pathname}?${currentParams.toString()}`, {
+    navigate(`/?${searchParams.toString()}`, {
       replace: true,
     });
   };
