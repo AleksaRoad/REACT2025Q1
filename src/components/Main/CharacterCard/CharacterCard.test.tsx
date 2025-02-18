@@ -12,13 +12,13 @@ import { CharacterCard } from './CharacterCard';
 describe('CharacterCard', () => {
   it('should render relevant card data', () => {
     render(
-      <MemoryRouter>
-        <Provider store={store}>
-          <ThemeProvider>
+      <Provider store={store}>
+        <ThemeProvider>
+          <MemoryRouter>
             <CharacterCard character={MOCK_CHARACTERS_DATA[0]} />
-          </ThemeProvider>
-        </Provider>
-      </MemoryRouter>
+          </MemoryRouter>
+        </ThemeProvider>
+      </Provider>
     );
 
     expect(screen.getByText(MOCK_CHARACTERS_DATA[0].name)).toBeInTheDocument();
@@ -33,13 +33,13 @@ describe('CharacterCard', () => {
     const user = userEvent.setup();
 
     render(
-      <MemoryRouter>
-        <Provider store={store}>
-          <ThemeProvider>
+      <Provider store={store}>
+        <ThemeProvider>
+          <MemoryRouter>
             <CharacterCard character={MOCK_CHARACTERS_DATA[0]} />
-          </ThemeProvider>
-        </Provider>
-      </MemoryRouter>
+          </MemoryRouter>
+        </ThemeProvider>
+      </Provider>
     );
 
     const linkElement = screen.getByRole('link', { name: /Rick Sanchez/i });

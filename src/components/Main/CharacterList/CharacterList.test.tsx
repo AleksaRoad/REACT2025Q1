@@ -10,11 +10,11 @@ import { CharacterList } from './CharacterList';
 describe('CharacterList', () => {
   it('should render the correct number of CharacterCard components based on the characters length', () => {
     render(
-      <MemoryRouter>
-        <Provider store={store}>
+      <Provider store={store}>
+        <MemoryRouter>
           <CharacterList characters={MOCK_CHARACTERS_DATA} searchQuery={''} />
-        </Provider>
-      </MemoryRouter>
+        </MemoryRouter>
+      </Provider>
     );
 
     const list = screen.getByRole('list');
@@ -26,11 +26,11 @@ describe('CharacterList', () => {
 
   it('should display a message when no cards are present', () => {
     render(
-      <MemoryRouter>
-        <Provider store={store}>
+      <Provider store={store}>
+        <MemoryRouter>
           <CharacterList characters={MOCK_EMPTY_DATA} searchQuery={'rick'} />
-        </Provider>
-      </MemoryRouter>
+        </MemoryRouter>
+      </Provider>
     );
 
     const message = screen.getByText(/No results found for your search for/i);
