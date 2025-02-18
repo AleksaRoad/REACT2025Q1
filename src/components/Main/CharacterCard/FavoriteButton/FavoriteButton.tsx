@@ -1,13 +1,21 @@
+import type { MouseEvent } from 'react';
+
 type FavoriteButton = {
   isFavorite: boolean;
   onClick: () => void;
 };
 
 export function FavoriteButton({ isFavorite, onClick }: FavoriteButton) {
+  const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
+    event.stopPropagation();
+    event.preventDefault();
+    onClick();
+  };
+
   return (
     <button
       className="dark:focus:outline-blue-xs focus:outline-focus flex cursor-pointer items-center justify-center p-1"
-      onClick={onClick}
+      onClick={handleClick}
     >
       <svg
         version="1.1"
