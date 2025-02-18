@@ -1,11 +1,11 @@
 import type { MouseEvent } from 'react';
 
-type FavoriteButton = {
+type FavoriteCheckbox = {
   isFavorite: boolean;
   onClick: () => void;
 };
 
-export function FavoriteButton({ isFavorite, onClick }: FavoriteButton) {
+export function FavoriteCheckbox({ isFavorite, onClick }: FavoriteCheckbox) {
   const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
     event.stopPropagation();
     event.preventDefault();

@@ -9,7 +9,7 @@ import {
 } from '@/shared';
 import { removeFavorite, addFavorite } from '@/store';
 
-import { FavoriteButton } from './FavoriteButton';
+import { FavoriteCheckbox } from './FavoriteCheckbox';
 
 type CharacterCardProps = {
   character: RickAndMortyCharacter;
@@ -41,7 +41,7 @@ const CharacterCardComponent: FC<CharacterCardProps> = ({ character }) => {
         <h1 className="m-0 overflow-hidden text-2xl font-bold text-ellipsis whitespace-nowrap">
           {character.name}
         </h1>
-        <FavoriteButton isFavorite={isFavorite} onClick={toggleFavorite} />
+        <FavoriteCheckbox isFavorite={isFavorite} onClick={toggleFavorite} />
       </header>
       <img
         className="size-30 rounded-full border-4 border-amber-100 dark:border-gray-200/70"
