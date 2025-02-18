@@ -1,5 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+import type { PayloadAction } from '@reduxjs/toolkit';
+
 import { type RickAndMortyCharacter } from '@/shared';
 
 const initialState: Array<RickAndMortyCharacter> = [];
@@ -20,8 +22,12 @@ export const favoritesSlice = createSlice({
     removeFavorite: (state, action) => {
       return state.filter((item) => item.id !== action.payload.id);
     },
+
+    setFavorites: (_, action: PayloadAction<RickAndMortyCharacter[]>) => {
+      return action.payload;
+    },
   },
 });
 
-export const { addFavorite, clearFavorites, removeFavorite } =
+export const { addFavorite, clearFavorites, removeFavorite, setFavorites } =
   favoritesSlice.actions;

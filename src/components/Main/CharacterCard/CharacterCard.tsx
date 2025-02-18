@@ -4,12 +4,10 @@ import { Link, useSearchParams } from 'react-router';
 
 import {
   BUTTON_STYLES,
-  CACHE_KEY,
-  useStorage,
   useAppSelector,
   type RickAndMortyCharacter,
 } from '@/shared';
-import { removeFavorite, addFavorite, store } from '@/store';
+import { removeFavorite, addFavorite } from '@/store';
 
 import { FavoriteButton } from './FavoriteButton';
 
@@ -20,12 +18,11 @@ type CharacterCardProps = {
 const CharacterCardComponent: FC<CharacterCardProps> = ({ character }) => {
   const dispatch = useDispatch();
   const favorites = useAppSelector((state) => state.favorites);
-  const { save } = useStorage(CACHE_KEY.favorites);
   const [searchParams] = useSearchParams();
 
-  const isFavorite = favorites.some(
-    (fav: RickAndMortyCharacter) => fav.id === character.id
-  );
+  const isFavorite =
+    Array.isArray(favorites) &&
+    favorites.some((fav: RickAndMortyCharacter) => fav.id === character.id);
 
   const toggleFavorite = () => {
     if (isFavorite) {
@@ -33,8 +30,6 @@ const CharacterCardComponent: FC<CharacterCardProps> = ({ character }) => {
     } else {
       dispatch(addFavorite(character));
     }
-    const updatedFavorites = store.getState().favorites;
-    save(JSON.stringify(updatedFavorites));
   };
 
   return (

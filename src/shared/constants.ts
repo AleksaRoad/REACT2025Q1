@@ -16,6 +16,7 @@ export const ERROR_MESSAGES = {
   PARSING_ERROR: 'Error parsing JSON:',
   PLEASE_TRY_AGAIN: 'Please try using different keywords.',
   ROOT_ELEMENT_NOT_FOUND: 'Root element not found',
+  STORAGE_FAVORITES_ERROR: 'Error loading favorites from localStorage:',
 };
 
 export const BUTTON_STYLES = {
