@@ -1,14 +1,24 @@
 import { render, screen } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
+import { Provider } from 'react-redux';
+import { MemoryRouter } from 'react-router';
 
 import { MOCK_CHARACTERS_DATA } from '@/__mocks__';
+import { ThemeProvider } from '@/shared';
+import { store } from '@/store';
 
 import { CharacterCard } from './CharacterCard';
 
 describe('CharacterCard', () => {
   it('should render relevant card data', () => {
     render(
-      <CharacterCard character={MOCK_CHARACTERS_DATA[0]} onClick={vi.fn()} />
+      <MemoryRouter>
+        <Provider store={store}>
+          <ThemeProvider>
+            <CharacterCard character={MOCK_CHARACTERS_DATA[0]} />
+          </ThemeProvider>
+        </Provider>
+      </MemoryRouter>
     );
 
     expect(screen.getByText(MOCK_CHARACTERS_DATA[0].name)).toBeInTheDocument();
@@ -20,18 +30,25 @@ describe('CharacterCard', () => {
   });
 
   it('should open a detailed card component when clicked', async () => {
-    const onCardClick = vi.fn();
     const user = userEvent.setup();
 
     render(
-      <CharacterCard
-        character={MOCK_CHARACTERS_DATA[0]}
-        onClick={onCardClick}
-      />
+      <MemoryRouter>
+        <Provider store={store}>
+          <ThemeProvider>
+            <CharacterCard character={MOCK_CHARACTERS_DATA[0]} />
+          </ThemeProvider>
+        </Provider>
+      </MemoryRouter>
     );
 
-    await user.click(screen.getByRole('button'));
+    const linkElement = screen.getByRole('link', { name: /Rick Sanchez/i });
 
-    expect(onCardClick).toHaveBeenCalled();
+    expect(linkElement).toHaveAttribute(
+      'href',
+      `/details/${MOCK_CHARACTERS_DATA[0].id}`
+    );
+
+    await user.click(linkElement);
   });
 });

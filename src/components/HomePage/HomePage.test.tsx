@@ -21,13 +21,6 @@ import { store } from '@/store';
 import { HomePage } from './HomePage';
 
 describe('HomePage', () => {
-  // const server = setupServer(...handlers);
-  // server.listen();
-
-  // beforeAll(() => server.listen());
-  // afterEach(() => server.resetHandlers());
-  // afterAll(() => server.close());
-
   describe('CharacterCard', () => {
     afterEach(() => {
       vi.clearAllMocks();
@@ -42,7 +35,7 @@ describe('HomePage', () => {
             <MemoryRouter>
               <Routes>
                 <Route path="/" element={<HomePage />}>
-                  <Route index element={<CharacterPage />} />
+                  <Route path="/details/:id" element={<CharacterPage />} />
                 </Route>
               </Routes>
             </MemoryRouter>
@@ -50,7 +43,7 @@ describe('HomePage', () => {
         </Provider>
       );
 
-      const firstCard = await screen.findByRole('button', {
+      const firstCard = await screen.findByRole('link', {
         name: /Beth Smith/i,
       });
 
@@ -91,9 +84,11 @@ describe('HomePage', () => {
 
     it('should correctly display the detailed card data', async () => {
       render(
-        <MemoryRouter>
-          <CharacterInfoSidebar character={MOCK_CHARACTERS_DATA[3]} />
-        </MemoryRouter>
+        <Provider store={store}>
+          <MemoryRouter>
+            <CharacterInfoSidebar character={MOCK_CHARACTERS_DATA[3]} />
+          </MemoryRouter>
+        </Provider>
       );
 
       const expectedTexts = [/Beth Smith/i, /female/i, /alive/i];
