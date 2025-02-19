@@ -1,5 +1,5 @@
-export type { RootState } from './store';
-export { store } from './store';
+export type { RootState, AppStore } from './store';
+export { store, setupStore } from './store';
 export {
   addFavorite,
   clearFavorites,

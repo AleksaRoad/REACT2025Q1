@@ -1,28 +1,29 @@
-import type { Middleware } from '@reduxjs/toolkit';
+import { type Middleware } from '@reduxjs/toolkit';
 
 import { CACHE_KEY, ERROR_MESSAGES } from '@/shared';
 
 import type { RootState } from './store';
 
-export const localStorageMiddleware: Middleware =
-  (store) => (next) => (action) => {
-    if (typeof action === 'object' && action !== null && 'type' in action) {
-      if (action.type !== 'favorites/setFavorites') {
-        const storedFavorites = localStorage.getItem(CACHE_KEY.favorites);
+const isAction = (action: unknown): action is { type: string } =>
+  typeof action === 'object' && action !== null && 'type' in action;
 
-        if (storedFavorites) {
-          try {
-            const parsedFavorites = JSON.parse(storedFavorites);
+export const localStorageMiddleware: Middleware<unknown, RootState> =
+  (store) => (next) => (action: unknown) => {
+    if (isAction(action) && action.type !== 'favorites/setFavorites') {
+      const storedFavorites = localStorage.getItem(CACHE_KEY.favorites);
 
-            if (Array.isArray(parsedFavorites)) {
-              store.dispatch({
-                payload: parsedFavorites,
-                type: 'favorites/setFavorites',
-              });
-            }
-          } catch (error) {
-            console.error(ERROR_MESSAGES.STORAGE_FAVORITES_ERROR, error);
+      if (storedFavorites) {
+        try {
+          const parsedFavorites = JSON.parse(storedFavorites);
+
+          if (Array.isArray(parsedFavorites)) {
+            store.dispatch({
+              payload: parsedFavorites,
+              type: 'favorites/setFavorites',
+            });
           }
+        } catch (error) {
+          console.error(ERROR_MESSAGES.STORAGE_FAVORITES_ERROR, error);
         }
       }
     }

@@ -26,7 +26,7 @@ const CharacterCardComponent: FC<CharacterCardProps> = ({ character }) => {
 
   const toggleFavorite = () => {
     if (isFavorite) {
-      dispatch(removeFavorite({ id: character.id }));
+      dispatch(removeFavorite(character.id));
     } else {
       dispatch(addFavorite(character));
     }

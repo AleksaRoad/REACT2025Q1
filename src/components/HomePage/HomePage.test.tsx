@@ -1,6 +1,5 @@
-import { render, screen, waitFor } from '@testing-library/react';
+import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { Provider } from 'react-redux';
 import {
   createMemoryRouter,
   MemoryRouter,
@@ -8,6 +7,7 @@ import {
   RouterProvider,
   Routes,
 } from 'react-router';
+import { renderWithProviders } from 'tests/renderWithProviders';
 
 import { MOCK_CHARACTERS_DATA } from '@/__mocks__';
 import {
@@ -16,7 +16,6 @@ import {
   PaginationControl,
 } from '@/components';
 import { ThemeProvider } from '@/shared';
-import { store } from '@/store';
 
 import { HomePage } from './HomePage';
 
@@ -29,18 +28,16 @@ describe('HomePage', () => {
     it('should trigger additional API call to fetch detailed information when user clicks on the Card', async () => {
       const user = userEvent.setup();
 
-      render(
-        <Provider store={store}>
-          <ThemeProvider>
-            <MemoryRouter>
-              <Routes>
-                <Route path="/" element={<HomePage />}>
-                  <Route path="/details/:id" element={<CharacterPage />} />
-                </Route>
-              </Routes>
-            </MemoryRouter>
-          </ThemeProvider>
-        </Provider>
+      renderWithProviders(
+        <ThemeProvider>
+          <MemoryRouter>
+            <Routes>
+              <Route path="/" element={<HomePage />}>
+                <Route path="/details/:id" element={<CharacterPage />} />
+              </Route>
+            </Routes>
+          </MemoryRouter>
+        </ThemeProvider>
       );
 
       const firstCard = await screen.findByRole('link', {
@@ -63,17 +60,15 @@ describe('HomePage', () => {
         vi.clearAllMocks();
       });
 
-      it.skip('should display a loading indicator while fetching data', async () => {
-        render(
-          <Provider store={store}>
-            <ThemeProvider>
-              <MemoryRouter>
-                <Routes>
-                  <Route path="/" element={<HomePage />}></Route>
-                </Routes>
-              </MemoryRouter>
-            </ThemeProvider>
-          </Provider>
+      it('should display a loading indicator while fetching data', async () => {
+        renderWithProviders(
+          <ThemeProvider>
+            <MemoryRouter>
+              <Routes>
+                <Route path="/" element={<HomePage />}></Route>
+              </Routes>
+            </MemoryRouter>
+          </ThemeProvider>
         );
 
         await waitFor(() => {
@@ -83,12 +78,10 @@ describe('HomePage', () => {
     });
 
     it('should correctly display the detailed card data', async () => {
-      render(
-        <Provider store={store}>
-          <MemoryRouter>
-            <CharacterInfoSidebar character={MOCK_CHARACTERS_DATA[3]} />
-          </MemoryRouter>
-        </Provider>
+      renderWithProviders(
+        <MemoryRouter>
+          <CharacterInfoSidebar character={MOCK_CHARACTERS_DATA[3]} />
+        </MemoryRouter>
       );
 
       const expectedTexts = [/Beth Smith/i, /female/i, /alive/i];
@@ -103,7 +96,7 @@ describe('HomePage', () => {
       const fetchSpy = vi.spyOn(globalThis, 'fetch');
       const user = userEvent.setup();
 
-      render(
+      renderWithProviders(
         <MemoryRouter>
           <CharacterInfoSidebar character={MOCK_CHARACTERS_DATA[3]} />
         </MemoryRouter>
@@ -128,7 +121,7 @@ describe('HomePage', () => {
       });
 
       it('should display the correct number of pages', async () => {
-        render(
+        renderWithProviders(
           <PaginationControl
             currentPage={1}
             onNextPage={vi.fn()}
@@ -154,13 +147,10 @@ describe('HomePage', () => {
           { initialEntries: ['/?page=2'] }
         );
 
-        render(
-          <Provider store={store}>
-            {' '}
-            <ThemeProvider>
-              <RouterProvider router={router} />{' '}
-            </ThemeProvider>{' '}
-          </Provider>
+        renderWithProviders(
+          <ThemeProvider>
+            <RouterProvider router={router} />
+          </ThemeProvider>
         );
 
         const nextButton = await screen.findByRole('button', { name: /next/i });

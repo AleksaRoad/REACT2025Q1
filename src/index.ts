@@ -7,5 +7,8 @@ export {
   removeFavorite,
   clearFavorites,
   type RootState,
+  type AppStore,
+  setupStore,
 } from './store';
 export { CharacterPage, NotFound, SearchForm } from '@/components';
+export { renderWithProviders } from '../tests';
