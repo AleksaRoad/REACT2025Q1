@@ -1,4 +1,8 @@
-export { MOCK_CHARACTERS_DATA, MOCK_EMPTY_DATA } from './__mocks__';
+export {
+  MOCK_CHARACTERS_DATA,
+  MOCK_EMPTY_DATA,
+  renderWithProviders,
+} from '../tests';
 export { App } from './App';
 export { rickAndMortyApi } from './services';
 export {
@@ -11,4 +15,3 @@ export {
   setupStore,
 } from './store';
 export { CharacterPage, NotFound, SearchForm } from '@/components';
-export { renderWithProviders } from '../tests';

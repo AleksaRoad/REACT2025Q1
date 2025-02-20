@@ -1,21 +1,14 @@
 import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import {
-  createMemoryRouter,
-  MemoryRouter,
-  Route,
-  RouterProvider,
-  Routes,
-} from 'react-router';
-import { renderWithProviders } from 'tests/renderWithProviders';
+import { createMemoryRouter, Route, RouterProvider } from 'react-router';
+import { renderWithProviders, MOCK_CHARACTERS_DATA } from 'tests';
 
-import { MOCK_CHARACTERS_DATA } from '@/__mocks__';
 import {
   CharacterInfoSidebar,
   CharacterPage,
   PaginationControl,
 } from '@/components';
-import { ThemeProvider } from '@/shared';
+import { AppProvidersAndRoutes, ThemeProvider } from '@/shared';
 
 import { HomePage } from './HomePage';
 
@@ -29,15 +22,11 @@ describe('HomePage', () => {
       const user = userEvent.setup();
 
       renderWithProviders(
-        <ThemeProvider>
-          <MemoryRouter>
-            <Routes>
-              <Route path="/" element={<HomePage />}>
-                <Route path="/details/:id" element={<CharacterPage />} />
-              </Route>
-            </Routes>
-          </MemoryRouter>
-        </ThemeProvider>
+        <AppProvidersAndRoutes>
+          <Route path="/" element={<HomePage />}>
+            <Route path="/details/:id" element={<CharacterPage />} />
+          </Route>
+        </AppProvidersAndRoutes>
       );
 
       const firstCard = await screen.findByRole('link', {
@@ -62,13 +51,9 @@ describe('HomePage', () => {
 
       it('should display a loading indicator while fetching data', async () => {
         renderWithProviders(
-          <ThemeProvider>
-            <MemoryRouter>
-              <Routes>
-                <Route path="/" element={<HomePage />}></Route>
-              </Routes>
-            </MemoryRouter>
-          </ThemeProvider>
+          <AppProvidersAndRoutes>
+            <Route path="/" element={<HomePage />}></Route>
+          </AppProvidersAndRoutes>
         );
 
         await waitFor(() => {
@@ -79,9 +64,14 @@ describe('HomePage', () => {
 
     it('should correctly display the detailed card data', async () => {
       renderWithProviders(
-        <MemoryRouter>
-          <CharacterInfoSidebar character={MOCK_CHARACTERS_DATA[3]} />
-        </MemoryRouter>
+        <AppProvidersAndRoutes>
+          <Route
+            path="/"
+            element={
+              <CharacterInfoSidebar character={MOCK_CHARACTERS_DATA[3]} />
+            }
+          />
+        </AppProvidersAndRoutes>
       );
 
       const expectedTexts = [/Beth Smith/i, /female/i, /alive/i];
@@ -97,9 +87,14 @@ describe('HomePage', () => {
       const user = userEvent.setup();
 
       renderWithProviders(
-        <MemoryRouter>
-          <CharacterInfoSidebar character={MOCK_CHARACTERS_DATA[3]} />
-        </MemoryRouter>
+        <AppProvidersAndRoutes>
+          <Route
+            path="/"
+            element={
+              <CharacterInfoSidebar character={MOCK_CHARACTERS_DATA[3]} />
+            }
+          />
+        </AppProvidersAndRoutes>
       );
 
       const closeButton = await screen.findByRole('button', {

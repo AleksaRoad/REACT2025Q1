@@ -23,7 +23,11 @@ export const Header: FC<HeaderProps> = ({ apiErrorMessage, onSearch }) => {
           apiErrorMessage={apiErrorMessage}
         />
       )}
-      <button className={BUTTON_STYLES.theme} onClick={toggleTheme}>
+      <button
+        className={BUTTON_STYLES.theme}
+        onClick={toggleTheme}
+        data-testid="toggle-theme"
+      >
         <img src={themeIcon} alt="theme" className="h-10 w-10" />
       </button>
     </header>

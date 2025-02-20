@@ -1,6 +1,5 @@
 import { http, HttpResponse } from 'msw';
-
-import { MOCK_CHARACTERS_DATA } from '@/__mocks__';
+import { MOCK_CHARACTERS_DATA } from 'tests/__mocks__';
 
 export const handlers = [
   http.get('https://rickandmortyapi-sigma.vercel.app/api/character', () => {

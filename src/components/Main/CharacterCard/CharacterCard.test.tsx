@@ -1,24 +1,21 @@
 import { render, screen } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
-import { Provider } from 'react-redux';
-import { MemoryRouter } from 'react-router';
+import { Route } from 'react-router';
+import { MOCK_CHARACTERS_DATA } from 'tests';
 
-import { MOCK_CHARACTERS_DATA } from '@/__mocks__';
-import { ThemeProvider } from '@/shared';
-import { store } from '@/store';
+import { AppProvidersAndRoutes } from '@/shared';
 
 import { CharacterCard } from './CharacterCard';
 
 describe('CharacterCard', () => {
   it('should render relevant card data', () => {
     render(
-      <Provider store={store}>
-        <ThemeProvider>
-          <MemoryRouter>
-            <CharacterCard character={MOCK_CHARACTERS_DATA[0]} />
-          </MemoryRouter>
-        </ThemeProvider>
-      </Provider>
+      <AppProvidersAndRoutes withStore>
+        <Route
+          path="/"
+          element={<CharacterCard character={MOCK_CHARACTERS_DATA[0]} />}
+        />
+      </AppProvidersAndRoutes>
     );
 
     expect(screen.getByText(MOCK_CHARACTERS_DATA[0].name)).toBeInTheDocument();
@@ -33,13 +30,12 @@ describe('CharacterCard', () => {
     const user = userEvent.setup();
 
     render(
-      <Provider store={store}>
-        <ThemeProvider>
-          <MemoryRouter>
-            <CharacterCard character={MOCK_CHARACTERS_DATA[0]} />
-          </MemoryRouter>
-        </ThemeProvider>
-      </Provider>
+      <AppProvidersAndRoutes withStore>
+        <Route
+          path="/"
+          element={<CharacterCard character={MOCK_CHARACTERS_DATA[0]} />}
+        />
+      </AppProvidersAndRoutes>
     );
 
     const linkElement = screen.getByRole('link', { name: /Rick Sanchez/i });
