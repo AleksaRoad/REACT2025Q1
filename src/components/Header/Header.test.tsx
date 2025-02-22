@@ -25,27 +25,29 @@ describe('Header component', () => {
     );
 
     expect(screen.getByRole('searchbox')).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: 'Search' })).toBeInTheDocument();
-    expect(screen.getByTestId('toggle-theme')).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /Search/i })).toBeInTheDocument();
+    expect(
+      screen.getByRole('button', { name: /Toggle theme/i })
+    ).toBeInTheDocument();
   });
 
   it('should display ErrorDisplay when apiErrorMessage is provided', async () => {
+    const apiErrorMessage = 'API Error message';
+
     renderWithProviders(
       <AppProvidersAndRoutes>
         <Route
           path="/"
           element={
-            <Header
-              apiErrorMessage={ERROR_MESSAGES.OOOPS}
-              onSearch={mockOnSearch}
-            />
+            <Header apiErrorMessage={apiErrorMessage} onSearch={mockOnSearch} />
           }
         />
       </AppProvidersAndRoutes>
     );
 
-    const errorDisplays = await screen.findAllByText(ERROR_MESSAGES.OOOPS);
+    const errorDisplay = await screen.findByText(ERROR_MESSAGES.OOOPS);
 
-    expect(errorDisplays.length).toBeGreaterThan(0);
+    expect(errorDisplay).toBeInTheDocument();
+    expect(screen.getByText(apiErrorMessage)).toBeInTheDocument();
   });
 });

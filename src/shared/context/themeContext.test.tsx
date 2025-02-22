@@ -35,7 +35,7 @@ describe('themeContext', () => {
 
     expect(document.documentElement.getAttribute('data-theme')).toBe('light');
 
-    const button = screen.getByTestId('toggle-theme');
+    const button = screen.getByRole('button', { name: /Toggle theme/i });
 
     expect(button).toBeInTheDocument();
 

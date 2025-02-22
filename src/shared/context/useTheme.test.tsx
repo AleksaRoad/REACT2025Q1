@@ -9,15 +9,11 @@ describe('useTheme', () => {
 
     const { result } = renderHook(() => useTheme(), {
       wrapper: ({ children }) => (
-        <ThemeContext.Provider value={mockContextValue}>
-          {children}
-        </ThemeContext.Provider>
+        <ThemeContext value={mockContextValue}>{children}</ThemeContext>
       ),
     });
 
     expect(result.current).toBe(mockContextValue);
-    expect(result.current.isDark).toBe(true);
-    expect(typeof result.current.toggleTheme).toBe('function');
   });
 
   it('should throw error when used outside ThemeProvider', () => {

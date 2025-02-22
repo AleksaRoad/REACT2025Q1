@@ -1,7 +1,6 @@
 import { type FC } from 'react';
 
-import { SearchForm } from '@/components';
-import { ErrorDisplay } from '@/components';
+import { SearchForm, ErrorDisplay } from '@/components';
 import { BUTTON_STYLES, ERROR_MESSAGES, useTheme } from '@/shared';
 
 type HeaderProps = {
@@ -26,9 +25,9 @@ export const Header: FC<HeaderProps> = ({ apiErrorMessage, onSearch }) => {
       <button
         className={BUTTON_STYLES.theme}
         onClick={toggleTheme}
-        data-testid="toggle-theme"
+        aria-label="Toggle theme"
       >
-        <img src={themeIcon} alt="theme" className="h-10 w-10" />
+        <img src={themeIcon} alt="" className="h-10 w-10" />
       </button>
     </header>
   );
