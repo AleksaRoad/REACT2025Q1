@@ -14,7 +14,7 @@ export function FavoriteCheckbox({ isFavorite, onClick }: FavoriteCheckbox) {
 
   return (
     <button
-      className="dark:focus:outline-blue-xs focus:outline-focus flex cursor-pointer items-center justify-center p-1"
+      className="dark:focus:outline-blue-xs focus:outline-focus relative top-[-4px] right-[-5px] flex cursor-pointer items-center justify-center"
       onClick={handleClick}
     >
       <svg

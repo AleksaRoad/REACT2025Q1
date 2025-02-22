@@ -38,7 +38,7 @@ const CharacterCardComponent: FC<CharacterCardProps> = ({ character }) => {
       className={BUTTON_STYLES.card}
     >
       <header className="flex w-full items-center justify-between gap-3">
-        <h1 className="m-0 overflow-hidden text-2xl font-bold text-ellipsis whitespace-nowrap">
+        <h1 className="overflow-hidden text-2xl font-bold text-ellipsis whitespace-nowrap">
           {character.name}
         </h1>
         <FavoriteCheckbox isFavorite={isFavorite} onClick={toggleFavorite} />
