@@ -5,6 +5,8 @@ import { useDispatch } from 'react-redux';
 import { BUTTON_STYLES, CACHE_KEY, useStorage, useAppSelector } from '@/shared';
 import { clearFavorites } from '@/store';
 
+import { convertToCsv } from './convertToCsv';
+
 export const SelectionActions: FC = () => {
   const favorites = useAppSelector((state) => state.favorites);
   const dispatch = useDispatch();
@@ -18,6 +20,16 @@ export const SelectionActions: FC = () => {
   const handleDeselect = () => {
     dispatch(clearFavorites());
     save('[]');
+  };
+
+  const handleDownload = () => {
+    const csvData = convertToCsv(favorites);
+    const blob = new Blob([csvData], { type: 'text/csv;charset=utf-8' });
+    const link = document.createElement('a');
+
+    link.href = URL.createObjectURL(blob);
+    link.download = `${favorites.length}_characters.csv`;
+    link.click();
   };
 
   return (
@@ -35,7 +47,9 @@ export const SelectionActions: FC = () => {
         Unselect all
       </button>
       <span>{favorites.length} items in favorites</span>
-      <button className={BUTTON_STYLES.favorites}>Download</button>
+      <button className={BUTTON_STYLES.favorites} onClick={handleDownload}>
+        Download
+      </button>
     </div>
   );
 };
