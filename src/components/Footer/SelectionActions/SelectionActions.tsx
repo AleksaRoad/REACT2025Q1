@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import { useState, useEffect, type FC } from 'react';
+import { useState, useEffect, type FC, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { BUTTON_STYLES, CACHE_KEY, useStorage, useAppSelector } from '@/shared';
@@ -12,6 +12,7 @@ export const SelectionActions: FC = () => {
   const dispatch = useDispatch();
   const { save } = useStorage(CACHE_KEY.favorites);
   const [isVisible, setIsVisible] = useState(false);
+  const downloadLinkRef = useRef<HTMLAnchorElement | null>(null);
 
   useEffect(() => {
     setIsVisible(favorites.length > 0);
@@ -25,11 +26,12 @@ export const SelectionActions: FC = () => {
   const handleDownload = () => {
     const csvData = convertToCsv(favorites);
     const blob = new Blob([csvData], { type: 'text/csv;charset=utf-8' });
-    const link = document.createElement('a');
 
-    link.href = URL.createObjectURL(blob);
-    link.download = `${favorites.length}_characters.csv`;
-    link.click();
+    if (downloadLinkRef.current) {
+      downloadLinkRef.current.href = URL.createObjectURL(blob);
+      downloadLinkRef.current.download = `${favorites.length}_characters.csv`;
+      downloadLinkRef.current.click();
+    }
   };
 
   return (
@@ -50,6 +52,13 @@ export const SelectionActions: FC = () => {
       <button className={BUTTON_STYLES.favorites} onClick={handleDownload}>
         Download
       </button>
+      <a
+        ref={downloadLinkRef}
+        href="#"
+        download
+        className="hidden"
+        aria-hidden="true"
+      />
     </div>
   );
 };
