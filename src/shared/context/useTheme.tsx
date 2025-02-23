@@ -4,7 +4,7 @@ import { ERROR_MESSAGES } from '../constants';
 
 type ThemeContextType = {
   isDark: boolean;
-  toggleTheme: () => void;
+  toggleTheme: VoidFunction;
 };
 
 export const ThemeContext = createContext<ThemeContextType | null>(null);

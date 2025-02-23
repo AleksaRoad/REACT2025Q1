@@ -64,7 +64,6 @@ export const CharacterInfoSidebar: FC<CharacterInfoSidebarProps> = ({
         <button
           className={BUTTON_STYLES.close}
           type="button"
-          aria-label="close"
           onClick={handleCloseSidebar}
         >
           Close

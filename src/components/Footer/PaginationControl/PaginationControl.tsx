@@ -5,8 +5,8 @@ import { BUTTON_STYLES } from '@/shared';
 type PaginationControlProps = {
   currentPage: number;
   totalPages: number;
-  onPreviousPage: () => void;
-  onNextPage: () => void;
+  onPreviousPage: VoidFunction;
+  onNextPage: VoidFunction;
 };
 
 export const PaginationControl: FC<PaginationControlProps> = ({

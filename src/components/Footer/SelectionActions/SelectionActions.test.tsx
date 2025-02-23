@@ -2,7 +2,6 @@ import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { Route } from 'react-router';
 import { renderWithProviders } from 'tests';
-import { vi } from 'vitest';
 
 import { AppProvidersAndRoutes, CACHE_KEY } from '@/shared';
 import { clearFavorites, store } from '@/store';
@@ -29,6 +28,8 @@ describe('SelectionActions', () => {
     );
 
     expect(localStorage.getItem(CACHE_KEY.favorites)).toBeNull();
+
+    expect(store.dispatch).not.toHaveBeenCalled();
 
     const button = screen.getByText(/Unselect all/i);
     await user.click(button);

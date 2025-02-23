@@ -1,7 +1,7 @@
 import { type SerializedError } from '@reduxjs/toolkit';
 import { type FetchBaseQueryError } from '@reduxjs/toolkit/query/react';
 
-type getErrorMessageProps = {
+type GetErrorMessageProps = {
   apiErrorMessage?: string;
   error?: FetchBaseQueryError | SerializedError;
 };
@@ -9,7 +9,7 @@ type getErrorMessageProps = {
 export const getErrorMessage = ({
   apiErrorMessage = '',
   error,
-}: getErrorMessageProps) => {
+}: GetErrorMessageProps) => {
   if (!error) return '';
 
   if ('status' in error) {

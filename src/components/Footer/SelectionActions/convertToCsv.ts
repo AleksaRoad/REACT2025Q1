@@ -1,20 +1,20 @@
 import { type RickAndMortyCharacter } from '@/shared';
 
 export const convertToCsv = (characters: RickAndMortyCharacter[]): string => {
-  if (!characters.length) return '';
+  if (characters.length === 0) return '';
 
-  const headers = Object.keys(characters[0]);
+  const fields = Object.keys(characters[0]);
 
-  const csvRows = characters.map((obj) => {
-    return headers
-      .map((key) => {
-        const value = obj[key as keyof RickAndMortyCharacter] ?? 'N/A';
+  const csvRows = characters.map((character) => {
+    return fields
+      .map((field) => {
+        const value = character[field as keyof RickAndMortyCharacter] ?? 'N/A';
         return `"${String(value).replace(/"/g, '""')}"`;
       })
       .join(';');
   });
 
-  const csvContent = [headers.join(';'), ...csvRows].join('\n');
+  const csvContent = [fields.join(';'), ...csvRows].join('\n');
 
   return csvContent;
 };

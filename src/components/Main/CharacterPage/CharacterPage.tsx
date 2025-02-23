@@ -10,31 +10,41 @@ import { CharacterInfoSidebar } from './CharacterInfoSidebar';
 
 export const CharacterPage: FC = () => {
   const { id: characterId } = useParams();
+  const validCharacterId = Number(characterId) || 1;
 
   const {
     data: character,
     error,
     isLoading,
-  } = rickAndMortyApi.useGetCharacterByIdQuery(Number(characterId));
+  } = rickAndMortyApi.useGetCharacterByIdQuery(validCharacterId);
 
-  return (
-    <>
-      {isLoading && (
-        <div className="flex min-w-72 items-center justify-center">
-          <Spinner />
-        </div>
-      )}
-      {error && (
-        <ErrorDisplay
-          errorMessage={getErrorMessage({
-            apiErrorMessage: ERROR_MESSAGES.FAILED_TO_FETCH_DATA,
-            error,
-          })}
-        />
-      )}
-      {!isLoading && !error && character && (
-        <CharacterInfoSidebar character={character} />
-      )}
-    </>
-  );
+  if (isLoading) {
+    return (
+      <div className="flex min-w-72 items-center justify-center">
+        <Spinner />
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <ErrorDisplay
+        errorMessage={getErrorMessage({
+          apiErrorMessage: ERROR_MESSAGES.FAILED_TO_FETCH_DATA,
+          error,
+        })}
+      />
+    );
+  }
+
+  if (!character) {
+    return (
+      <ErrorDisplay
+        errorMessage={ERROR_MESSAGES.NO_RESULTS_FOUND}
+        searchQuery={characterId}
+      />
+    );
+  }
+
+  return <CharacterInfoSidebar character={character} />;
 };
