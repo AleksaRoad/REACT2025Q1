@@ -1,7 +1,6 @@
 import jsxA11y from 'eslint-plugin-jsx-a11y';
 import eslintPrettier from 'eslint-config-prettier';
 import js from '@eslint/js';
-import globals from 'globals';
 import reactHooks from 'eslint-plugin-react-hooks';
 import reactRefresh from 'eslint-plugin-react-refresh';
 import react from 'eslint-plugin-react';
@@ -9,9 +8,8 @@ import tseslint from 'typescript-eslint';
 import reactCompiler from 'eslint-plugin-react-compiler';
 import jsDom from 'eslint-plugin-jest-dom';
 import eslintTestingLibrary from 'eslint-plugin-testing-library';
-import vitest from 'eslint-plugin-vitest';
+import vitest from '@vitest/eslint-plugin';
 import perfectionist from 'eslint-plugin-perfectionist';
-import simpleImportSort from 'eslint-plugin-simple-import-sort';
 
 export default tseslint.config(
   { ignores: ['dist'] },
@@ -28,7 +26,7 @@ export default tseslint.config(
         tsconfigRootDir: import.meta.dirname,
       },
       ecmaVersion: 2020,
-      globals: globals.browser,
+      globals: { ...vitest.environments.env.globals },
     },
     plugins: {
       react,
@@ -40,7 +38,6 @@ export default tseslint.config(
       jsDom,
       eslintTestingLibrary,
       perfectionist,
-      'simple-import-sort': simpleImportSort,
     },
     rules: {
       '@typescript-eslint/consistent-type-exports': 'error',
@@ -53,6 +50,7 @@ export default tseslint.config(
       'react-compiler/react-compiler': 'error',
       ...react.configs.recommended.rules,
       ...react.configs['jsx-runtime'].rules,
+      ...vitest.configs.recommended.rules,
       'no-console': ['error', { allow: ['error'] }],
       'perfectionist/sort-objects': [
         'error',
@@ -61,12 +59,38 @@ export default tseslint.config(
         },
       ],
       'perfectionist/sort-interfaces': ['error'],
-      'simple-import-sort/imports': 'error',
-      'simple-import-sort/exports': 'error',
+      'perfectionist/sort-imports': [
+        'error',
+        {
+          groups: [
+            ['builtin', 'external'],
+            'type',
+            'my-internal',
+            'my-internal-type',
+            ['parent', 'sibling', 'index'],
+            ['parent-type', 'sibling-type', 'index-type'],
+            'internal',
+            'internal-type',
+            'unknown',
+            'style',
+          ],
+          customGroups: {
+            value: {
+              'my-internal': '^@/.+',
+            },
+            type: {
+              'my-internal-type': '^@/.+',
+            },
+          },
+        },
+      ],
     },
     settings: {
       react: {
         version: 'detect',
+      },
+      vitest: {
+        typecheck: true,
       },
     },
   }

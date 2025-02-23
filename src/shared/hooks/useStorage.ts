@@ -1,5 +1,7 @@
 import { useCallback, useMemo } from 'react';
 
+import { ERROR_MESSAGES } from '../constants';
+
 export const useStorage = (key: string) => {
   const load = useCallback(() => {
     const storageValue = localStorage.getItem(key);
@@ -7,7 +9,7 @@ export const useStorage = (key: string) => {
       try {
         return JSON.parse(storageValue);
       } catch (error) {
-        console.error('Error parsing JSON:', error);
+        console.error(ERROR_MESSAGES.PARSING_ERROR, error);
       }
     }
     return null;

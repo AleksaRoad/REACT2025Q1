@@ -2,6 +2,8 @@ import type { FC } from 'react';
 
 import { PaginationControl } from '@/components';
 
+import { SelectionActions } from './SelectionActions';
+
 type FooterProps = {
   showPagination: boolean;
   currentPage: number;
@@ -18,7 +20,8 @@ export const Footer: FC<FooterProps> = ({
   totalPages = 1,
 }) => {
   return (
-    <footer className="mt-auto flex flex-wrap items-center justify-center gap-5">
+    <footer className="mt-auto flex flex-col items-center justify-center gap-5">
+      <SelectionActions />
       {showPagination && (
         <PaginationControl
           currentPage={currentPage}

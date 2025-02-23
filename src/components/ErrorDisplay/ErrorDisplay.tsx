@@ -20,7 +20,7 @@ export const ErrorDisplay: FC<ErrorDisplayProps> = ({
         {searchQuery && (
           <>
             <p className="mb-8 text-3xl text-red-600">{`'${searchQuery}'`}</p>
-            <p>{ERROR_MESSAGES.PLEASE_TRY_AGAIN}</p>
+            <p data-testid="try-again">{ERROR_MESSAGES.PLEASE_TRY_AGAIN}</p>
           </>
         )}
         {apiErrorMessage && <p>{apiErrorMessage}</p>}

@@ -1,30 +1,54 @@
 import { type FC, memo } from 'react';
+import { useDispatch } from 'react-redux';
+import { Link, useSearchParams } from 'react-router';
 
-import { type RickAndMortyCharacter } from '@/shared';
+import {
+  BUTTON_STYLES,
+  useAppSelector,
+  type RickAndMortyCharacter,
+} from '@/shared';
+import { removeFavorite, addFavorite } from '@/store';
+
+import { FavoriteCheckbox } from './FavoriteCheckbox';
 
 type CharacterCardProps = {
   character: RickAndMortyCharacter;
-  onClick: (character: RickAndMortyCharacter) => void;
 };
 
-const CharacterCardComponent: FC<CharacterCardProps> = ({
-  character,
-  onClick,
-}) => {
+const CharacterCardComponent: FC<CharacterCardProps> = ({ character }) => {
+  const dispatch = useDispatch();
+  const favorites = useAppSelector((state) => state.favorites);
+  const [searchParams] = useSearchParams();
+
+  const isFavorite =
+    Array.isArray(favorites) &&
+    favorites.some((fav: RickAndMortyCharacter) => fav.id === character.id);
+
+  const toggleFavorite = () => {
+    if (isFavorite) {
+      dispatch(removeFavorite(character.id));
+    } else {
+      dispatch(addFavorite(character));
+    }
+  };
+
   return (
-    <button
-      className="bg-blue-xs focus:outline-blue-xs flex w-64 cursor-pointer flex-col items-center justify-center gap-5 rounded-3xl p-5 text-black transition-transform duration-200 ease-in-out focus-visible:ring-2 active:scale-95 sm:hover:scale-105"
-      onClick={() => onClick(character)}
+    <Link
+      to={`/details/${character.id}?${searchParams.toString()}`}
+      className={BUTTON_STYLES.card}
     >
-      <h1 className="m-0 max-w-full overflow-hidden text-2xl font-bold text-ellipsis whitespace-nowrap">
-        {character.name}
-      </h1>
+      <header className="flex w-full items-center justify-between gap-3">
+        <h1 className="overflow-hidden text-2xl font-bold text-ellipsis whitespace-nowrap">
+          {character.name}
+        </h1>
+        <FavoriteCheckbox isFavorite={isFavorite} onClick={toggleFavorite} />
+      </header>
       <img
-        className="size-30 rounded-full border-4 border-gray-200/70"
+        className="size-30 rounded-full border-4 border-amber-100 dark:border-gray-200/70"
         src={character.image}
         alt={character.name}
       />
-    </button>
+    </Link>
   );
 };
 

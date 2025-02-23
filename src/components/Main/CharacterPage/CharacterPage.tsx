@@ -1,34 +1,50 @@
+import { useParams } from 'react-router';
+
 import type { FC } from 'react';
-import { useLocation } from 'react-router';
 
 import { ErrorDisplay, Spinner } from '@/components';
-import { getCharacterById } from '@/services';
-import { useLoadData } from '@/shared';
+import { rickAndMortyApi } from '@/services';
+import { ERROR_MESSAGES, getErrorMessage } from '@/shared';
 
 import { CharacterInfoSidebar } from './CharacterInfoSidebar';
 
 export const CharacterPage: FC = () => {
-  const location = useLocation();
-  const searchParams = new URLSearchParams(location.search);
-  const characterId = searchParams.get('details');
+  const { id: characterId } = useParams();
+  const validCharacterId = Number(characterId) || 1;
 
   const {
     data: character,
     error,
     isLoading,
-  } = useLoadData(getCharacterById, Number(characterId));
+  } = rickAndMortyApi.useGetCharacterByIdQuery(validCharacterId);
 
-  return (
-    <>
-      {isLoading && (
-        <div className="flex min-w-72 items-center justify-center">
-          <Spinner />
-        </div>
-      )}
-      {error && <ErrorDisplay errorMessage={error} />}
-      {!isLoading && !error && character && (
-        <CharacterInfoSidebar character={character} />
-      )}
-    </>
-  );
+  if (isLoading) {
+    return (
+      <div className="flex min-w-72 items-center justify-center">
+        <Spinner />
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <ErrorDisplay
+        errorMessage={getErrorMessage({
+          apiErrorMessage: ERROR_MESSAGES.FAILED_TO_FETCH_DATA,
+          error,
+        })}
+      />
+    );
+  }
+
+  if (!character) {
+    return (
+      <ErrorDisplay
+        errorMessage={ERROR_MESSAGES.NO_RESULTS_FOUND}
+        searchQuery={characterId}
+      />
+    );
+  }
+
+  return <CharacterInfoSidebar character={character} />;
 };

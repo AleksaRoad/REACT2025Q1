@@ -1,7 +1,8 @@
-import type { FC } from 'react';
-import { useLocation, useNavigate } from 'react-router';
+import { useNavigate, useSearchParams } from 'react-router';
 
-import type { RickAndMortyCharacter } from '@/shared';
+import type { FC } from 'react';
+
+import { BUTTON_STYLES, type RickAndMortyCharacter } from '@/shared';
 
 type CharacterInfoSidebarProps = {
   character: RickAndMortyCharacter;
@@ -11,24 +12,22 @@ export const CharacterInfoSidebar: FC<CharacterInfoSidebarProps> = ({
   character,
 }) => {
   const navigate = useNavigate();
-  const location = useLocation();
+  const [searchParams] = useSearchParams();
 
   const handleCloseSidebar = () => {
-    const currentParams = new URLSearchParams(location.search);
-    currentParams.delete('details');
-    navigate(`${location.pathname}?${currentParams.toString()}`, {
+    navigate(`/?${searchParams.toString()}`, {
       replace: true,
     });
   };
 
   return (
-    <article className="bg-blue-xs flex min-w-72 flex-col items-center gap-5 rounded-4xl p-5">
+    <article className="dark:bg-blue-xs flex min-w-72 flex-col items-center gap-5 rounded-4xl bg-lime-100/80 p-5">
       <header className="flex w-64 flex-col items-center justify-center gap-3 rounded-3xl text-black">
         <h1 className="m-0 max-w-full text-center text-3xl font-bold">
           {character.name}
         </h1>
         <img
-          className="size-30 rounded-full border-4 border-gray-200/70"
+          className="size-30 rounded-full border-4 border-amber-100 dark:border-gray-200/70"
           src={character.image}
           alt={character.name}
         />
@@ -63,9 +62,8 @@ export const CharacterInfoSidebar: FC<CharacterInfoSidebarProps> = ({
       </main>
       <footer>
         <button
-          className="active:bg-blue-md sm:hover:bg-blue-md focus:outline-blue-xs w-20 cursor-pointer rounded-xl border-none bg-white py-1.5 text-black transition-colors duration-200 ease-in-out active:text-white sm:hover:text-white"
+          className={BUTTON_STYLES.close}
           type="button"
-          aria-label="close"
           onClick={handleCloseSidebar}
         >
           Close

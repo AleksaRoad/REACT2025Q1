@@ -1,14 +1,22 @@
 import { render, screen } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
+import { Route } from 'react-router';
+import { MOCK_CHARACTERS_DATA } from 'tests';
 
-import { MOCK_CHARACTERS_DATA } from '@/__mocks__';
+import { AppProvidersAndRoutes } from '@/shared';
 
+import { CharacterPage } from '../CharacterPage';
 import { CharacterCard } from './CharacterCard';
 
 describe('CharacterCard', () => {
   it('should render relevant card data', () => {
     render(
-      <CharacterCard character={MOCK_CHARACTERS_DATA[0]} onClick={vi.fn()} />
+      <AppProvidersAndRoutes withStore>
+        <Route
+          path="/"
+          element={<CharacterCard character={MOCK_CHARACTERS_DATA[0]} />}
+        />
+      </AppProvidersAndRoutes>
     );
 
     expect(screen.getByText(MOCK_CHARACTERS_DATA[0].name)).toBeInTheDocument();
@@ -20,18 +28,25 @@ describe('CharacterCard', () => {
   });
 
   it('should open a detailed card component when clicked', async () => {
-    const onCardClick = vi.fn();
     const user = userEvent.setup();
 
     render(
-      <CharacterCard
-        character={MOCK_CHARACTERS_DATA[0]}
-        onClick={onCardClick}
-      />
+      <AppProvidersAndRoutes withStore>
+        <Route
+          path="/"
+          element={<CharacterCard character={MOCK_CHARACTERS_DATA[0]} />}
+        />
+        <Route path="/details/:id" element={<CharacterPage />} />
+      </AppProvidersAndRoutes>
     );
 
-    await user.click(screen.getByRole('button'));
+    const linkElement = screen.getByRole('link', { name: /Rick Sanchez/i });
 
-    expect(onCardClick).toHaveBeenCalled();
+    expect(linkElement).toHaveAttribute(
+      'href',
+      `/details/${MOCK_CHARACTERS_DATA[0].id}`
+    );
+
+    await user.click(linkElement);
   });
 });
