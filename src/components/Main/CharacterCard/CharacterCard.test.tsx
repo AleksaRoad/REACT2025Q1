@@ -5,6 +5,7 @@ import { MOCK_CHARACTERS_DATA } from 'tests';
 
 import { AppProvidersAndRoutes } from '@/shared';
 
+import { CharacterPage } from '../CharacterPage';
 import { CharacterCard } from './CharacterCard';
 
 describe('CharacterCard', () => {
@@ -35,6 +36,7 @@ describe('CharacterCard', () => {
           path="/"
           element={<CharacterCard character={MOCK_CHARACTERS_DATA[0]} />}
         />
+        <Route path="/details/:id" element={<CharacterPage />} />
       </AppProvidersAndRoutes>
     );
 
