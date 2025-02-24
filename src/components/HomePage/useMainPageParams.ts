@@ -6,13 +6,10 @@ export const useHomePageParams = () => {
   const searchParams = new URLSearchParams(location.search);
 
   let currentPage = 1;
-  const parsePageNum = Number(searchParams.get('page'));
+  const parsePageNumber = Number(searchParams.get('page'));
 
-  if (Number.isNaN(parsePageNum) || parsePageNum <= 0) {
-    currentPage = 1;
-  } else {
-    currentPage = parsePageNum;
-  }
+  currentPage =
+    Number.isNaN(parsePageNumber) || parsePageNumber <= 0 ? 1 : parsePageNumber;
 
   return useMemo(
     () => ({

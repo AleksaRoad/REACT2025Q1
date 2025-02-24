@@ -10,11 +10,14 @@ import jsDom from 'eslint-plugin-jest-dom';
 import eslintTestingLibrary from 'eslint-plugin-testing-library';
 import vitest from '@vitest/eslint-plugin';
 import perfectionist from 'eslint-plugin-perfectionist';
+import eslintPluginUnicorn from 'eslint-plugin-unicorn';
+import globals from 'globals';
 
 export default tseslint.config(
-  { ignores: ['dist'] },
+  { ignores: ['dist', 'coverage'] },
   {
     extends: [
+      eslintPluginUnicorn.configs.recommended,
       js.configs.recommended,
       ...tseslint.configs.strict,
       eslintPrettier,
@@ -26,7 +29,7 @@ export default tseslint.config(
         tsconfigRootDir: import.meta.dirname,
       },
       ecmaVersion: 2020,
-      globals: { ...vitest.environments.env.globals },
+      globals: { ...vitest.environments.env.globals, ...globals.builtin },
     },
     plugins: {
       react,
@@ -81,6 +84,32 @@ export default tseslint.config(
             type: {
               'my-internal-type': '^@/.+',
             },
+          },
+        },
+      ],
+      '@typescript-eslint/consistent-type-definitions': ['error', 'type'],
+      'unicorn/no-array-callback-reference': 'off',
+      'unicorn/no-array-for-each': 'off',
+      'unicorn/no-array-reduce': 'off',
+      'unicorn/no-null': 'off',
+      'unicorn/number-literal-case': 'off',
+      'unicorn/numeric-separators-style': 'off',
+      'unicorn/prefer-node-remove': 'off',
+      'unicorn/filename-case': 'off',
+      'unicorn/prefer-query-selector': 'off',
+      'unicorn/prefer-spread': 'off',
+      'unicorn/prevent-abbreviations': [
+        'error',
+        {
+          allowList: {
+            acc: true,
+            env: true,
+            i: true,
+            j: true,
+            props: true,
+            Props: true,
+            Params: true,
+            Ref: true,
           },
         },
       ],

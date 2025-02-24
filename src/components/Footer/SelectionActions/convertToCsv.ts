@@ -9,7 +9,7 @@ export const convertToCsv = (characters: RickAndMortyCharacter[]): string => {
     return fields
       .map((field) => {
         const value = character[field as keyof RickAndMortyCharacter] ?? 'N/A';
-        return `"${String(value).replace(/"/g, '""')}"`;
+        return `"${String(value).replaceAll('"', '""')}"`;
       })
       .join(';');
   });

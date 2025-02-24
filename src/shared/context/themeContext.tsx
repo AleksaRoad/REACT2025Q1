@@ -13,11 +13,10 @@ export const ThemeProvider = ({ children }: ThemeProviderProps) => {
   const [isDark, setIsDark] = useState(false);
 
   const toggleTheme = () => {
-    setIsDark((prev) => {
-      const newIsDark = !prev;
+    setIsDark((previous) => {
+      const newIsDark = !previous;
       const newTheme = newIsDark ? 'dark' : 'light';
       save(newTheme);
-      document.documentElement.setAttribute('data-theme', newTheme);
       return newIsDark;
     });
   };
@@ -30,10 +29,9 @@ export const ThemeProvider = ({ children }: ThemeProviderProps) => {
   }, [load]);
 
   useLayoutEffect(() => {
-    document.documentElement.setAttribute(
-      'data-theme',
-      isDark ? 'dark' : 'light'
-    );
+    if (typeof document !== 'undefined') {
+      document.documentElement.dataset.theme = isDark ? 'dark' : 'light';
+    }
   }, [isDark]);
 
   return (

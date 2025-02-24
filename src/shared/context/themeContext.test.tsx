@@ -20,7 +20,7 @@ describe('themeContext', () => {
 
     render(<ThemeProvider>{null}</ThemeProvider>);
 
-    expect(document.documentElement.getAttribute('data-theme')).toBe('light');
+    expect(document.documentElement.dataset.theme).toBe('light');
   });
 
   it('should toggle theme and set document attribute', async () => {
@@ -33,16 +33,16 @@ describe('themeContext', () => {
       </AppProvidersAndRoutes>
     );
 
-    expect(document.documentElement.getAttribute('data-theme')).toBe('light');
+    expect(document.documentElement.dataset.theme).toBe('light');
 
     const button = screen.getByRole('button', { name: /Toggle theme/i });
 
     expect(button).toBeInTheDocument();
 
     await user.click(button);
-    expect(document.documentElement.getAttribute('data-theme')).toBe('dark');
+    expect(document.documentElement.dataset.theme).toBe('dark');
 
     await user.click(button);
-    expect(document.documentElement.getAttribute('data-theme')).toBe('light');
+    expect(document.documentElement.dataset.theme).toBe('light');
   });
 });

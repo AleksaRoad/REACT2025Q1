@@ -6,10 +6,10 @@ import type { FC, ReactNode } from 'react';
 import { ThemeProvider } from '@/shared';
 import { store } from '@/store';
 
-interface AppProvidersProps {
+type AppProvidersProps = {
   children: ReactNode;
   withStore?: boolean;
-}
+};
 
 export const AppProvidersAndRoutes: FC<AppProvidersProps> = ({
   children,

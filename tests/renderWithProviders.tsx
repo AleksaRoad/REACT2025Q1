@@ -4,10 +4,10 @@ import { Provider } from 'react-redux';
 
 import { type AppStore, type RootState, setupStore } from '@/store';
 
-interface ExtendedRenderOptions extends Omit<RenderOptions, 'queries'> {
+type ExtendedRenderOptions = RenderOptions & {
   preloadedState?: Partial<RootState>;
   store?: AppStore;
-}
+};
 
 export function renderWithProviders(
   ui: ReactElement,

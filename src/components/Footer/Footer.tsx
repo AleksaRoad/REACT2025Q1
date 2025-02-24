@@ -8,8 +8,8 @@ type FooterProps = {
   showPagination: boolean;
   currentPage: number;
   totalPages?: number;
-  onPreviousPage: (num: number) => void;
-  onNextPage: (num: number) => void;
+  onPreviousPage: (number: number) => void;
+  onNextPage: (number: number) => void;
 };
 
 export const Footer: FC<FooterProps> = ({
