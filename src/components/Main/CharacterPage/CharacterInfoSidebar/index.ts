@@ -1,1 +1,0 @@
-export { CharacterInfoSidebar } from './CharacterInfoSidebar';
