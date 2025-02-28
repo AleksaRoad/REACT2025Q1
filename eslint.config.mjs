@@ -14,8 +14,17 @@ const eslintConfig = [
   ...compat.extends('next/core-web-vitals', 'next/typescript'),
   ...compat.plugins('perfectionist'),
   ...compat.config(eslintConfigPrettier),
+
   {
+    languageOptions: {
+      parserOptions: {
+        projectService: true,
+        tsconfigRootDir: import.meta.dirname,
+      },
+    },
     rules: {
+      '@typescript-eslint/consistent-type-exports': 'error',
+      '@typescript-eslint/consistent-type-imports': 'error',
       'no-console': 'off',
       'perfectionist/sort-imports': [
         'error',
@@ -26,9 +35,11 @@ const eslintConfig = [
             },
             value: {
               'my-internal': '^@/.+',
+              next: '^next',
             },
           },
           groups: [
+            'next',
             ['builtin', 'external'],
             'type',
             'internal',
