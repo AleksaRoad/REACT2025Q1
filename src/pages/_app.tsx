@@ -1,6 +1,7 @@
-import { ThemeProvider } from '@/shared';
-import '@/styles/globals.css';
 import { type AppProps } from 'next/app';
+
+import '@/styles/globals.css';
+import { ThemeProvider } from '@/shared';
 
 export default function App({ Component, pageProps }: AppProps) {
   return (

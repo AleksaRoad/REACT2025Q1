@@ -1,4 +1,5 @@
 import { PAGE_SIZE, type RickAndMortyCharacter } from '@/shared';
+
 import { BASE_URL, ENDPOINTS } from './constants';
 
 type GetCharactersProps = {
@@ -13,9 +14,9 @@ const addImageToCharacter = (character: RickAndMortyCharacter) => ({
 });
 
 export const getCharacters = async ({
-  q = '',
-  page = 1,
   limit = PAGE_SIZE,
+  page = 1,
+  q = '',
 }: GetCharactersProps) => {
   try {
     const searchParams = new URLSearchParams([

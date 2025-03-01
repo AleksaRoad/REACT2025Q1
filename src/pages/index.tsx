@@ -1,23 +1,26 @@
-import { FC, useState } from 'react';
+import { clsx } from 'clsx';
+import localFont from 'next/font/local';
 import { useRouter } from 'next/router';
+import { useState } from 'react';
+
+import type { GetServerSideProps, InferGetServerSidePropsType } from 'next';
+import type { FC } from 'react';
+
 import { getCharacters } from '@/api';
 import { Header, MainContent, Spinner, Footer } from '@/components';
 import { CACHE_KEY, PAGE_SIZE, useStorage } from '@/shared';
-import { clsx } from 'clsx';
-import localFont from 'next/font/local';
-import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 
-export const ramFont = localFont({
+const ramFont = localFont({
   src: '../../public/assets/fonts/ramFont.woff2',
 });
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { page = 1, limit = PAGE_SIZE, q = '' } = context.query;
+  const { limit = PAGE_SIZE, page = 1, q = '' } = context.query;
 
   const params = {
-    q: String(q),
-    page: Number(page),
     limit: Number(limit),
+    page: Number(page),
+    q: String(q),
   };
 
   const characters = await getCharacters(params);
@@ -50,7 +53,7 @@ const Home: FC<InferGetServerSidePropsType<typeof getServerSideProps>> = ({
     router
       .push({
         pathname: '/',
-        query: { q: searchQuery, page: newPage },
+        query: { page: newPage, q: searchQuery },
       })
       .then(() => setIsLoading(false));
   };
@@ -62,7 +65,7 @@ const Home: FC<InferGetServerSidePropsType<typeof getServerSideProps>> = ({
     router
       .push({
         pathname: '/',
-        query: { q: newSearchQuery, page: 1 },
+        query: { page: 1, q: newSearchQuery },
       })
       .then(() => setIsLoading(false));
   };

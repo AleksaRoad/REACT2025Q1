@@ -1,6 +1,7 @@
 import Image from 'next/image';
-import { BUTTON_STYLES, CACHE_KEY, ERROR_MESSAGES, useStorage } from '@/shared';
 import Link from 'next/link';
+
+import { BUTTON_STYLES, CACHE_KEY, ERROR_MESSAGES, useStorage } from '@/shared';
 
 export default function NotFound() {
   const { save } = useStorage(CACHE_KEY.searchQuery);

@@ -1,5 +1,8 @@
-import { FC, FormEvent, useEffect, useRef } from 'react';
 import { useRouter } from 'next/router';
+import { useEffect, useRef } from 'react';
+
+import type { FC, FormEvent} from 'react';
+
 import { useStorage } from '@/shared';
 import { BUTTON_STYLES, CACHE_KEY } from '@/shared';
 

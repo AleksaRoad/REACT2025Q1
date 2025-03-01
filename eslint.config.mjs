@@ -1,8 +1,8 @@
 import { FlatCompat } from '@eslint/eslintrc';
+import vitest from '@vitest/eslint-plugin';
 import eslintConfigPrettier from 'eslint-config-prettier';
 import react from 'eslint-plugin-react';
 import reactHooks from 'eslint-plugin-react-hooks';
-import vitest from 'eslint-plugin-vitest';
 import { dirname } from 'path';
 import { fileURLToPath } from 'url';
 
@@ -15,7 +15,16 @@ const compat = new FlatCompat({
 
 const eslintConfig = [
   ...compat.extends('next/core-web-vitals', 'next/typescript'),
-  ...compat.plugins('perfectionist'),
+  ...compat.plugins(
+    'eslint-plugin-jest-dom',
+    'eslint-plugin-testing-library',
+    'eslint-plugin-react',
+    'eslint-plugin-react-hooks',
+    'eslint-plugin-react-compiler',
+    'eslint-plugin-react-refresh',
+    'perfectionist',
+    'eslint-plugin-vitest'
+  ),
   ...compat.config(eslintConfigPrettier),
 
   {
@@ -33,6 +42,10 @@ const eslintConfig = [
       'react-refresh/only-export-components': [
         'warn',
         { allowConstantExport: true },
+      ],
+      'react-refresh/only-export-components': [
+        'warn',
+        { allowExportNames: ['getServerSideProps'] },
       ],
       ...react.configs.recommended.rules,
       ...react.configs['jsx-runtime'].rules,
@@ -70,6 +83,14 @@ const eslintConfig = [
           type: 'alphabetical',
         },
       ],
+    },
+    settings: {
+      react: {
+        version: 'detect',
+      },
+      vitest: {
+        typecheck: true,
+      },
     },
   },
 ];
