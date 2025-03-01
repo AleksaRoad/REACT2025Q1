@@ -1,5 +1,8 @@
 import { FlatCompat } from '@eslint/eslintrc';
 import eslintConfigPrettier from 'eslint-config-prettier';
+import react from 'eslint-plugin-react';
+import reactHooks from 'eslint-plugin-react-hooks';
+import vitest from 'eslint-plugin-vitest';
 import { dirname } from 'path';
 import { fileURLToPath } from 'url';
 
@@ -25,7 +28,16 @@ const eslintConfig = [
     rules: {
       '@typescript-eslint/consistent-type-exports': 'error',
       '@typescript-eslint/consistent-type-imports': 'error',
-      'no-console': 'off',
+      ...reactHooks.configs.recommended.rules,
+      'react-compiler/react-compiler': 'error',
+      'react-refresh/only-export-components': [
+        'warn',
+        { allowConstantExport: true },
+      ],
+      ...react.configs.recommended.rules,
+      ...react.configs['jsx-runtime'].rules,
+      ...vitest.configs.recommended.rules,
+      'no-console': ['error', { allow: ['error'] }],
       'perfectionist/sort-imports': [
         'error',
         {
@@ -35,15 +47,17 @@ const eslintConfig = [
             },
             value: {
               'my-internal': '^@/.+',
-              next: '^next',
             },
           },
           groups: [
-            'next',
             ['builtin', 'external'],
             'type',
-            'internal',
+            'my-internal',
+            'my-internal-type',
             ['parent', 'sibling', 'index'],
+            ['parent-type', 'sibling-type', 'index-type'],
+            'internal',
+            'internal-type',
             'unknown',
             'style',
           ],
