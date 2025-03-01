@@ -1,4 +1,4 @@
-import { FC, useState, useEffect } from 'react';
+import { FC, useState } from 'react';
 import { useRouter } from 'next/router';
 import { getCharacters } from '@/api';
 import { Header, MainContent, Spinner, Footer } from '@/components';
@@ -39,33 +39,33 @@ const Home: FC<InferGetServerSidePropsType<typeof getServerSideProps>> = ({
   const { load: loadSearchQuery, save: saveSearchQuery } = useStorage(
     CACHE_KEY.searchQuery
   );
-  const [isLoading, setLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   const searchQuery = loadSearchQuery() ?? '';
   const currentPage = params.page ?? 1;
 
-  useEffect(() => {
-    setLoading(false);
-  }, [characters]);
-
   const handlePageChange = (newPage: number) => {
-    setLoading(true);
-    router.push({
-      pathname: '/',
-      query: { q: searchQuery, page: newPage },
-    });
+    setIsLoading(true);
+
+    router
+      .push({
+        pathname: '/',
+        query: { q: searchQuery, page: newPage },
+      })
+      .then(() => setIsLoading(false));
   };
 
   const handleSearch = (newSearchQuery: string) => {
-    setLoading(true);
+    setIsLoading(true);
     saveSearchQuery(newSearchQuery);
-    router.push({
-      pathname: '/',
-      query: { q: newSearchQuery, page: 1 },
-    });
-  };
 
-  const isPaginationVisible = totalPages > 1;
+    router
+      .push({
+        pathname: '/',
+        query: { q: newSearchQuery, page: 1 },
+      })
+      .then(() => setIsLoading(false));
+  };
 
   return (
     <section className="h-full w-full bg-[url('/assets/images/bg.webp')] bg-cover bg-fixed bg-center dark:bg-[url('/assets/images/bg1.webp')]">
@@ -87,7 +87,7 @@ const Home: FC<InferGetServerSidePropsType<typeof getServerSideProps>> = ({
           <MainContent characters={characters} searchQuery={searchQuery} />
         )}
         <Footer
-          showPagination={isPaginationVisible}
+          showPagination={totalPages > 1}
           currentPage={currentPage}
           totalPages={totalPages}
           onNextPage={() => handlePageChange(currentPage + 1)}
