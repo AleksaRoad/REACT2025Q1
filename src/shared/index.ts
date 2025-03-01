@@ -4,6 +4,6 @@ export {
   ERROR_MESSAGES,
   PAGE_SIZE,
 } from './constants';
-export { useStorage, useAppSelector } from './hooks';
+export { useStorage } from './hooks';
+export { ThemeProvider, useTheme } from './context';
 export type { RickAndMortyCharacter } from './types';
-export { getErrorMessage } from './helpers';

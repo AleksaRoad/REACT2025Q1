@@ -1,0 +1,46 @@
+import { PAGE_SIZE, type RickAndMortyCharacter } from '@/shared';
+import { BASE_URL, ENDPOINTS } from './constants';
+
+type GetCharactersProps = {
+  q?: string;
+  page?: number;
+  limit?: number;
+};
+
+const addImageToCharacter = (character: RickAndMortyCharacter) => ({
+  ...character,
+  image: `${BASE_URL.avatar}${ENDPOINTS.avatar}${character.id}.jpeg`,
+});
+
+export const getCharacters = async ({
+  q = '',
+  page = 1,
+  limit = PAGE_SIZE,
+}: GetCharactersProps) => {
+  try {
+    const searchParams = new URLSearchParams([
+      ['q', q.toString()],
+      ['_page', page.toString()],
+      ['_limit', PAGE_SIZE.toString()],
+    ]);
+
+    const response = await fetch(
+      `${BASE_URL.api}${ENDPOINTS.character}?${searchParams.toString()}`
+    );
+
+    if (!response.ok) {
+      throw new Error('Failed to fetch characters');
+    }
+
+    const characters: RickAndMortyCharacter[] = await response.json();
+    const totalCount = Number(response.headers.get('X-Total-Count')) || 0;
+    const totalPages = totalCount ? Math.ceil(totalCount / Number(limit)) : 1;
+
+    const charactersWithImages = characters.map(addImageToCharacter);
+
+    return { characters: charactersWithImages, totalPages };
+  } catch (error) {
+    console.error('Error fetching characters:', error);
+    return { characters: [], totalPages: 1 };
+  }
+};
