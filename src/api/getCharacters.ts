@@ -45,3 +45,21 @@ export const getCharacters = async ({
     return { characters: [], totalPages: 1 };
   }
 };
+
+export const getCharacterById = async (id: number) => {
+  try {
+    const response = await fetch(`${BASE_URL.api}${ENDPOINTS.character}/${id}`);
+
+    if (!response.ok) {
+      throw new Error('Failed to fetch character');
+    }
+
+    const character: RickAndMortyCharacter = await response.json();
+    return addImageToCharacter(character);
+  } catch (error) {
+    console.error('Error fetching character:', error);
+    return null;
+  } finally {
+    return null;
+  }
+};

@@ -1,1 +1,1 @@
-export { getCharacters } from './getCharacters';
+export { getCharacters, getCharacterById } from './getCharacters';

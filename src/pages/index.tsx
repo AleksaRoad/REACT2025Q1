@@ -6,28 +6,31 @@ import { useState } from 'react';
 import type { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import type { FC } from 'react';
 
-import { getCharacters } from '@/api';
+import { getCharacterById, getCharacters } from '@/api';
 import { Header, MainContent, Spinner, Footer } from '@/components';
-import { CACHE_KEY, PAGE_SIZE, useStorage } from '@/shared';
+import { PAGE_SIZE } from '@/shared';
 
 const ramFont = localFont({
   src: '../../public/assets/fonts/ramFont.woff2',
 });
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { limit = PAGE_SIZE, page = 1, q = '' } = context.query;
+  const { id = 1, limit = PAGE_SIZE, page = 1, q = '' } = context.query;
 
   const params = {
+    id: Number(id),
     limit: Number(limit),
     page: Number(page),
     q: String(q),
   };
 
   const characters = await getCharacters(params);
+  const character = await getCharacterById(params.id);
 
   return {
     props: {
       ...characters,
+      character,
       params,
     },
   };
@@ -39,12 +42,9 @@ const Home: FC<InferGetServerSidePropsType<typeof getServerSideProps>> = ({
   totalPages,
 }) => {
   const router = useRouter();
-  const { load: loadSearchQuery, save: saveSearchQuery } = useStorage(
-    CACHE_KEY.searchQuery
-  );
   const [isLoading, setIsLoading] = useState(false);
 
-  const searchQuery = loadSearchQuery() ?? '';
+  const searchQuery = params.q ?? '';
   const currentPage = params.page ?? 1;
 
   const handlePageChange = (newPage: number) => {
@@ -60,7 +60,6 @@ const Home: FC<InferGetServerSidePropsType<typeof getServerSideProps>> = ({
 
   const handleSearch = (newSearchQuery: string) => {
     setIsLoading(true);
-    saveSearchQuery(newSearchQuery);
 
     router
       .push({

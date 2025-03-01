@@ -10,7 +10,7 @@ type CharacterCardProps = {
 
 const CharacterCardComponent: FC<CharacterCardProps> = ({ character }) => {
   return (
-    <Link href="/" className={BUTTON_STYLES.card}>
+    <Link href={`/details/${[[character.id]]}`} className={BUTTON_STYLES.card}>
       <header className="flex w-full items-center justify-between gap-3">
         <h1 className="overflow-hidden text-2xl font-bold text-ellipsis whitespace-nowrap">
           {character.name}
