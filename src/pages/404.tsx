@@ -1,14 +1,12 @@
-import { useRouter } from 'next/router';
 import Image from 'next/image';
 import { BUTTON_STYLES, CACHE_KEY, ERROR_MESSAGES, useStorage } from '@/shared';
+import Link from 'next/link';
 
 export default function NotFound() {
-  const router = useRouter();
   const { save } = useStorage(CACHE_KEY.searchQuery);
 
-  const handleHomeClick = () => {
+  const handleClick = () => {
     save('');
-    router.push('/');
   };
 
   return (
@@ -26,9 +24,14 @@ export default function NotFound() {
           <div className="dark:bg-blue-xs flex w-80 flex-col items-center gap-5 rounded-3xl bg-lime-100/80 p-5 text-center text-2xl text-red-800 md:w-72">
             <p className="text-6xl text-red-600">404</p>
             <p>{ERROR_MESSAGES.NOT_FOUND}</p>
-            <button onClick={handleHomeClick} className={BUTTON_STYLES.home}>
+            <Link
+              href="/"
+              className={BUTTON_STYLES.home}
+              onClick={handleClick}
+              replace
+            >
               Home
-            </button>
+            </Link>
           </div>
         </div>
       </article>
