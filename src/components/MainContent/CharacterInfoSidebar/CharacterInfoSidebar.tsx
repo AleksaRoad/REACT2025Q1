@@ -15,7 +15,7 @@ export const CharacterInfoSidebar: FC<CharacterInfoSidebarProps> = ({
   const router = useRouter();
 
   const handleCloseSidebar = () => {
-    router.back();
+    router.push('/');
   };
 
   return (

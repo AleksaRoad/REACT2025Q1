@@ -1,45 +1,31 @@
-import type { GetServerSideProps } from 'next';
-import type { FC } from 'react';
+import type { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 
 import { getCharacterById } from '@/api';
 import { CharacterInfoSidebar } from '@/components';
-import { ERROR_MESSAGES } from '@/shared';
+import {
+  getSearchParamHelper,
+  parseNumberHelper,
+  type RickAndMortyCharacter,
+} from '@/shared';
 
-import type { RickAndMortyCharacter } from '@/shared';
+export const getServerSideProps = (async (context) => {
+  const { id } = context.query;
 
-type CharacterDetailsProps = {
-  character: RickAndMortyCharacter;
-};
+  const character: RickAndMortyCharacter | null = await getCharacterById(
+    parseNumberHelper(getSearchParamHelper(id))
+  );
 
-const CharacterDetails: FC<CharacterDetailsProps> = ({ character }) => {
   if (!character) {
-    return <div>{ERROR_MESSAGES.NOT_FOUND}</div>;
+    return { notFound: true };
   }
 
+  return { props: { character } };
+}) satisfies GetServerSideProps<{ character: RickAndMortyCharacter }>;
+
+const Details = ({
+  character,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   return <CharacterInfoSidebar character={character} />;
 };
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { id } = context.params as { id: string };
-
-  if (!id) {
-    return {
-      notFound: true,
-    };
-  }
-  const character = await getCharacterById(Number(id));
-
-  if (!character) {
-    return {
-      notFound: true,
-    };
-  }
-
-  return {
-    props: {
-      character,
-    },
-  };
-};
-
-export default CharacterDetails;
+export default Details;
