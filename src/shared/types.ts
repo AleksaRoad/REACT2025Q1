@@ -1,4 +1,4 @@
-export interface RickAndMortyCharacter {
+export type RickAndMortyCharacter = {
   created: string;
   gender: string;
   id: number;
@@ -9,4 +9,4 @@ export interface RickAndMortyCharacter {
   species: string;
   status: string;
   type: string;
-}
+};

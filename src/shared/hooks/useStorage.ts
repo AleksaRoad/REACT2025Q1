@@ -2,8 +2,12 @@ import { useCallback, useMemo } from 'react';
 
 import { ERROR_MESSAGES } from '../constants';
 
+const isClient = typeof window !== 'undefined';
+
 export const useStorage = (key: string) => {
   const load = useCallback(() => {
+    if (!isClient) return null;
+
     const storageValue = localStorage.getItem(key);
     if (storageValue !== null) {
       try {
@@ -17,7 +21,9 @@ export const useStorage = (key: string) => {
 
   const save = useCallback(
     (value: string) => {
-      localStorage.setItem(key, JSON.stringify(value));
+      if (isClient) {
+        localStorage.setItem(key, JSON.stringify(value));
+      }
     },
     [key]
   );

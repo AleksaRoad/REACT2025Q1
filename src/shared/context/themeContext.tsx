@@ -11,6 +11,7 @@ type ThemeProviderProps = {
 export const ThemeProvider = ({ children }: ThemeProviderProps) => {
   const { load, save } = useStorage(CACHE_KEY.theme);
   const [isDark, setIsDark] = useState(false);
+  const [isThemeReady, setIsThemeReady] = useState(false);
 
   const toggleTheme = () => {
     setIsDark((prev) => {
@@ -26,15 +27,24 @@ export const ThemeProvider = ({ children }: ThemeProviderProps) => {
     const storedTheme = load();
     if (storedTheme) {
       setIsDark(storedTheme === 'dark');
+    } else {
+      setIsDark(false);
     }
+    setIsThemeReady(true);
   }, [load]);
 
   useLayoutEffect(() => {
-    document.documentElement.setAttribute(
-      'data-theme',
-      isDark ? 'dark' : 'light'
-    );
-  }, [isDark]);
+    if (isThemeReady) {
+      document.documentElement.setAttribute(
+        'data-theme',
+        isDark ? 'dark' : 'light'
+      );
+    }
+  }, [isDark, isThemeReady]);
+
+  if (!isThemeReady) {
+    return null;
+  }
 
   return (
     <ThemeContext value={{ isDark, toggleTheme }}>{children}</ThemeContext>

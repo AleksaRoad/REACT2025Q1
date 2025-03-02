@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import { type FC } from 'react';
 
 import { SearchForm, ErrorDisplay } from '@/components';
@@ -27,7 +28,7 @@ export const Header: FC<HeaderProps> = ({ apiErrorMessage, onSearch }) => {
         onClick={toggleTheme}
         aria-label="Toggle theme"
       >
-        <img src={themeIcon} alt="" className="h-10 w-10" />
+        <Image src={themeIcon} alt="" width={40} height={40} />
       </button>
     </header>
   );
