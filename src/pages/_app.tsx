@@ -1,12 +1,15 @@
 import { type AppProps } from 'next/app';
+import { Provider } from 'react-redux';
 
-import { ThemeProvider } from '@/shared';
 import '@/styles/globals.css';
+import { store, ThemeProvider } from '@/shared';
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <ThemeProvider>
-      <Component {...pageProps} />
-    </ThemeProvider>
+    <Provider store={store}>
+      <ThemeProvider>
+        <Component {...pageProps} />
+      </ThemeProvider>
+    </Provider>
   );
 }
