@@ -2,20 +2,13 @@ import clsx from 'clsx';
 import { useState, useEffect, type FC, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 
-import {
-  BUTTON_STYLES,
-  CACHE_KEY,
-  useStorage,
-  useAppSelector,
-  clearFavorites,
-} from '@/shared';
+import { BUTTON_STYLES, useAppSelector, clearFavorites } from '@/shared';
 
 import { convertToCsv } from './convertToCsv';
 
 export const SelectionActions: FC = () => {
   const favorites = useAppSelector((state) => state.favorites);
   const dispatch = useDispatch();
-  const { save } = useStorage(CACHE_KEY.favorites);
   const [isVisible, setIsVisible] = useState(false);
   const downloadLinkRef = useRef<HTMLAnchorElement | null>(null);
 
@@ -25,7 +18,6 @@ export const SelectionActions: FC = () => {
 
   const handleDeselect = () => {
     dispatch(clearFavorites());
-    save('[]');
   };
 
   const handleDownload = () => {
