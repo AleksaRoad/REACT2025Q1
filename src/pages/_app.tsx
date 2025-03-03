@@ -53,7 +53,11 @@ MyApp.getInitialProps = async (context: AppContext) => {
     getSearchParamHelper(context.router.query.page)
   );
   const ctx = await App.getInitialProps(context);
-  const { characters, totalPages } = await getCharacters({ limit: PAGE_SIZE });
+  const { characters, totalPages } = await getCharacters({
+    limit: PAGE_SIZE,
+    page: currentPage,
+    q: searchQuery,
+  });
 
   return { ...ctx, characters, currentPage, searchQuery, totalPages };
 };

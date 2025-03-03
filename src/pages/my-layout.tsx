@@ -1,11 +1,10 @@
 import clsx from 'clsx';
 import localFont from 'next/font/local';
 import { useRouter } from 'next/router';
-import { type FC, useState, type ReactNode } from 'react';
+import { useState, type FC, type ReactNode } from 'react';
 
 import { Header, Spinner, MainContent, Footer } from '@/components';
-
-import type { RickAndMortyCharacter } from '@/shared';
+import { type RickAndMortyCharacter } from '@/shared';
 
 const ramFont = localFont({
   src: '../../public/assets/fonts/ramFont.woff2',
@@ -46,7 +45,7 @@ const Layout: FC<LayoutProps> = ({
     router
       .push({
         pathname: '/',
-        query: { page: 1, q: newSearchQuery },
+        query: { page: currentPage, q: newSearchQuery },
       })
       .then(() => setIsLoading(false));
   };
