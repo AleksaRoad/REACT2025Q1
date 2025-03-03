@@ -4,8 +4,16 @@ export {
   ERROR_MESSAGES,
   PAGE_SIZE,
 } from './constants';
-export { ThemeProvider, useTheme } from './context';
 export { useStorage, useAppSelector } from './hooks';
+export { ThemeProvider, useTheme } from './context';
 export type { RickAndMortyCharacter } from './types';
-export { rickAndMortyApi } from '@/services';
-export { getErrorMessage, AppProvidersAndRoutes } from './helpers';
+export {
+  store,
+  addFavorite,
+  removeFavorite,
+  clearFavorites,
+  type RootState,
+  type AppStore,
+  setupStore,
+} from './store';
+export { getSearchParamHelper, parseNumberHelper } from './helpers';

@@ -1,7 +1,9 @@
-import { type FC, type FormEvent, useEffect, useRef } from 'react';
+import { useRouter } from 'next/router';
+import { useRef, useEffect, useState } from 'react';
 
-import { useStorage } from '@/services';
-import { BUTTON_STYLES, CACHE_KEY } from '@/shared';
+import type { FC, FormEvent } from 'react';
+
+import { BUTTON_STYLES } from '@/shared';
 
 type SearchFormProps = {
   onSearch: (query: string) => void;
@@ -9,21 +11,27 @@ type SearchFormProps = {
 
 export const SearchForm: FC<SearchFormProps> = ({ onSearch }) => {
   const searchInput = useRef<HTMLInputElement | null>(null);
-  const { load, save } = useStorage(CACHE_KEY.searchQuery);
+  const router = useRouter();
+  const [initialQuery, setInitialQuery] = useState('');
 
   useEffect(() => {
-    const cachedValue = load();
-
-    if (cachedValue && searchInput.current) {
-      searchInput.current.value = cachedValue;
+    if (router.isReady) {
+      const query = (router.query.q as string) || '';
+      setInitialQuery(query);
+      if (searchInput.current) {
+        searchInput.current.value = query;
+      }
     }
-  }, [load]);
+  }, [router.query.q, router.isReady]);
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const searchQuery = searchInput.current?.value?.trim() || '';
-    save(searchQuery && searchQuery);
     onSearch(searchQuery);
+    router.push({
+      pathname: '/',
+      query: { q: searchQuery },
+    });
   };
 
   return (
@@ -34,6 +42,7 @@ export const SearchForm: FC<SearchFormProps> = ({ onSearch }) => {
           type="search"
           ref={searchInput}
           placeholder="Enter search term"
+          defaultValue={initialQuery}
         />
         <button className={BUTTON_STYLES.search} type="submit">
           Search
