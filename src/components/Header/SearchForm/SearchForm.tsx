@@ -18,7 +18,11 @@ export const SearchForm: FC = () => {
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
     const query = searchQuery.trim();
-    if (query) {
+    if (query === '') {
+      const params = new URLSearchParams(searchParams.toString());
+      params.delete('q');
+      router.push(`/?${params.toString()}`, { scroll: false });
+    } else {
       const queryString = new URLSearchParams({ q: query }).toString();
       router.push(`/?${queryString}`, { scroll: false });
     }
