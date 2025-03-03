@@ -6,18 +6,16 @@ import { CharacterList } from './CharacterList';
 
 type MainProps = {
   characters: RickAndMortyCharacter[];
-  searchQuery: string;
-  children: ReactNode;
+  children?: ReactNode;
 };
 
 export const MainContent: FC<MainProps> = ({
   characters,
   children,
-  searchQuery,
-}) => {
+}: MainProps) => {
   return (
     <main className="flex h-full w-full flex-grow items-center justify-center gap-5">
-      <CharacterList characters={characters} searchQuery={searchQuery} />
+      <CharacterList characters={characters} />
       {children}
     </main>
   );

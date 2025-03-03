@@ -1,37 +1,27 @@
-import { useRouter } from 'next/router';
-import { useRef, useEffect, useState } from 'react';
+'use client';
 
-import type { FC, FormEvent } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { useState, type FC, type FormEvent, useEffect } from 'react';
 
 import { BUTTON_STYLES } from '@/shared';
 
-type SearchFormProps = {
-  onSearch: (query: string) => void;
-};
-
-export const SearchForm: FC<SearchFormProps> = ({ onSearch }) => {
-  const searchInput = useRef<HTMLInputElement | null>(null);
+export const SearchForm: FC = () => {
+  const [searchQuery, setSearchQuery] = useState('');
   const router = useRouter();
-  const [initialQuery, setInitialQuery] = useState('');
+  const searchParams = useSearchParams();
 
   useEffect(() => {
-    if (router.isReady) {
-      const query = (router.query.q as string) || '';
-      setInitialQuery(query);
-      if (searchInput.current) {
-        searchInput.current.value = query;
-      }
-    }
-  }, [router.query.q, router.isReady]);
+    const queryFromURL = searchParams.get('q') || '';
+    setSearchQuery(queryFromURL);
+  }, [searchParams]);
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
-    const searchQuery = searchInput.current?.value?.trim() || '';
-    onSearch(searchQuery);
-    router.push({
-      pathname: '/',
-      query: { q: searchQuery },
-    });
+    const query = searchQuery.trim();
+    if (query) {
+      const queryString = new URLSearchParams({ q: query }).toString();
+      router.push(`/?${queryString}`, { scroll: false });
+    }
   };
 
   return (
@@ -40,9 +30,9 @@ export const SearchForm: FC<SearchFormProps> = ({ onSearch }) => {
         <input
           className="dark:focus:border-blue-md dark:focus:ring-blue-lm min-w-52 rounded-lg border-none bg-white/[0.9] px-4 py-1 focus:border-amber-500 focus:ring-2 focus:ring-amber-800 focus:outline-amber-500 dark:focus:outline-violet-500"
           type="search"
-          ref={searchInput}
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
           placeholder="Enter search term"
-          defaultValue={initialQuery}
         />
         <button className={BUTTON_STYLES.search} type="submit">
           Search

@@ -15,5 +15,6 @@ export {
   type RootState,
   type AppStore,
   setupStore,
+  ReduxProvider,
 } from './store';
 export { getSearchParamHelper, parseNumberHelper } from './helpers';

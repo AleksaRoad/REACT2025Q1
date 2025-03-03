@@ -15,14 +15,21 @@
     "incremental": true,
     "paths": {
       "@/*": ["./src/*"]
-    }
+    },
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
   },
   "include": [
-    "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
     "eslint.config.mjs",
-    "postcss.config.mjs"
+    "next-env.d.ts",
+    "postcss.config.mjs",
+    ".next/types/**/*.ts",
+    "src/app/page.tsч"
   ],
   "exclude": ["node_modules"]
 }

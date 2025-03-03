@@ -1,3 +1,5 @@
+'use client';
+
 import Image from 'next/image';
 import Link from 'next/link';
 import { type FC, memo } from 'react';
@@ -48,6 +50,7 @@ const CharacterCardComponent: FC<CharacterCardProps> = ({ character }) => {
           alt={character.name}
           width={120}
           height={120}
+          priority
         />
       )}
     </Link>

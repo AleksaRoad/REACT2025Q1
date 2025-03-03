@@ -1,8 +1,10 @@
+'use client';
+
 import { createContext, useContext } from 'react';
 
 import { ERROR_MESSAGES } from '../constants';
 
-type ThemeContextType = {
+export type ThemeContextType = {
   isDark: boolean;
   toggleTheme: VoidFunction;
 };

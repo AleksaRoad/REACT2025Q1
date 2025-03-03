@@ -2,10 +2,11 @@ import { PAGE_SIZE, type RickAndMortyCharacter } from '@/shared';
 
 import { BASE_URL, ENDPOINTS } from './constants';
 
-type GetCharactersProps = {
+export type GetCharactersProps = {
   q?: string;
   page?: number;
   limit?: number;
+  id?: number;
 };
 
 const addImageToCharacter = (character: RickAndMortyCharacter) => ({
@@ -46,20 +47,18 @@ export const getCharacters = async ({
   }
 };
 
-export const getCharacterById = async (
-  id: number
-): Promise<RickAndMortyCharacter | null> => {
-  try {
-    const response = await fetch(`${BASE_URL.api}${ENDPOINTS.character}/${id}`);
+export const getCharacterById = async (searchParams: GetCharactersProps) => {
+  if (!searchParams.id) return null;
+  const characterById = await fetch(
+    `${BASE_URL.api}${ENDPOINTS.character}/${searchParams.id}`
+  )
+    .then((res) => {
+      return res.json();
+    })
 
-    if (!response.ok) {
-      throw new Error('Failed to fetch character');
-    }
+    .then((character: RickAndMortyCharacter) => {
+      return addImageToCharacter(character);
+    });
 
-    const character: RickAndMortyCharacter = await response.json();
-    return addImageToCharacter(character);
-  } catch (error) {
-    console.error('Error fetching character:', error);
-    return null;
-  }
+  return characterById;
 };

@@ -1,3 +1,5 @@
+'use client';
+
 import { type ReactNode, useLayoutEffect, useState } from 'react';
 
 import { CACHE_KEY, useStorage } from '@/shared';

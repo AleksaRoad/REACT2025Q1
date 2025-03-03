@@ -45,7 +45,7 @@ const eslintConfig = [
       ],
       'react-refresh/only-export-components': [
         'warn',
-        { allowExportNames: ['getServerSideProps'] },
+        { allowExportNames: ['getServerSideProps', 'metadata', 'viewport'] },
       ],
       ...react.configs.recommended.rules,
       ...react.configs['jsx-runtime'].rules,

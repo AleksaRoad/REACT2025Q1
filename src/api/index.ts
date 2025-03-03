@@ -1,1 +1,5 @@
-export { getCharacters, getCharacterById } from './getCharacters';
+export {
+  getCharacters,
+  getCharacterById,
+  type GetCharactersProps,
+} from './getCharacters';

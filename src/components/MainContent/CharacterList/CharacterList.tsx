@@ -7,13 +7,9 @@ import { CharacterCard } from '../CharacterCard';
 
 type CharacterListProps = {
   characters: RickAndMortyCharacter[];
-  searchQuery: string;
 };
 
-export const CharacterList: FC<CharacterListProps> = ({
-  characters,
-  searchQuery,
-}) => {
+export const CharacterList: FC<CharacterListProps> = ({ characters }) => {
   return characters.length > 0 ? (
     <ul className="m-0 flex list-none flex-wrap items-center justify-center gap-5 px-0 py-10">
       {characters.map((character) => (
@@ -23,9 +19,6 @@ export const CharacterList: FC<CharacterListProps> = ({
       ))}
     </ul>
   ) : (
-    <ErrorDisplay
-      errorMessage={ERROR_MESSAGES.NO_RESULTS_FOUND}
-      searchQuery={searchQuery}
-    />
+    <ErrorDisplay errorMessage={ERROR_MESSAGES.NO_RESULTS_FOUND} />
   );
 };

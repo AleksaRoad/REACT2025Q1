@@ -1,1 +1,1 @@
-export { PaginationControl } from './PaginationControl';
+export { default as PaginationControl } from './PaginationControl';
