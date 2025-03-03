@@ -6,7 +6,7 @@ import { CharacterList } from './CharacterList';
 
 type MainProps = {
   characters: RickAndMortyCharacter[];
-  children?: ReactNode;
+  children: ReactNode;
 };
 
 export const MainContent: FC<MainProps> = ({

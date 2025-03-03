@@ -11,12 +11,12 @@ const ramFont = localFont({
   src: '../../public/assets/fonts/ramFont.woff2',
 });
 
-type PageProps = {
+export type PageProps = {
   searchParams: Promise<GetCharactersProps>;
   children: ReactNode;
 };
 
-const Page: FC<PageProps> = async ({ children, searchParams }) => {
+const Home: FC<PageProps> = async ({ children, searchParams }) => {
   const { limit = PAGE_SIZE, page = 1, q = '' } = await searchParams;
 
   const { characters, totalPages } = await getCharacters({ limit, page, q });
@@ -40,4 +40,4 @@ const Page: FC<PageProps> = async ({ children, searchParams }) => {
   );
 };
 
-export default Page;
+export default Home;
